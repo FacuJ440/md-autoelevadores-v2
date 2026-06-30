@@ -1,0 +1,14 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# VS Code
+.vscode/
+
+# Markdown files
+*.md
+
+# Skills / Tasks
+.agents/
