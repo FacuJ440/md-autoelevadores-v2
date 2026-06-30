@@ -1,4 +1,5 @@
-import SectionLabel from './SectionLabel'
+import { Link } from 'react-router-dom'
+import SectionLabel from '@/components/SectionLabel'
 
 export default function About() {
   return (
@@ -7,6 +8,7 @@ export default function About() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
           {/* Text */}
           <div>
+            <SectionLabel>SOBRE NOSOTROS</SectionLabel>
             <h2 className="text-display font-light text-[#D42027] mb-8">
               MD Autoelevadores
             </h2>
@@ -16,12 +18,12 @@ export default function About() {
             <p className="text-body font-normal text-mercury mb-8">
               Representantes en Mendoza, San Juan y San Luis de toda la línea de autoelevadores Linde, Still, Hako, baterías Hoppecke, equipos hidráulicos, CVS Ferrari y Battioni Pagani. Cerramientos industriales, puertas rápidas, plataformas y más.
             </p>
-            <a
-              href="#contacto"
+            <Link
+              to="/nosotros"
               className="inline-block border border-carbon-warm text-carbon-warm text-body-sm font-normal px-[22px] py-[18px] rounded-lg hover:bg-carbon-warm hover:text-white transition-colors"
             >
               Conocer más
-            </a>
+            </Link>
           </div>
 
           {/* Image */}

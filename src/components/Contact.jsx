@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import SectionLabel from './SectionLabel'
+import SectionLabel from '@/components/SectionLabel'
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -18,7 +18,7 @@ export default function Contact() {
   }
 
   return (
-    <section id="contacto" className="bg-vellum py-24">
+    <section id="contacto" className="bg-vellum pt-12 pb-24">
       <div className="max-w-page mx-auto px-6">
         <h2 className="text-display font-light text-carbon-warm mb-16">
           Hablemos
@@ -36,7 +36,7 @@ export default function Contact() {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className="w-full bg-paper-white border border-carbon-warm/10 rounded-body px-4 py-3 text-body font-normal text-carbon-warm placeholder:text-mercury focus:outline-none focus:border-carbon-warm/30 transition-colors"
+                className="w-full bg-paper-white border border-carbon-warm/10 rounded-lg px-4 py-3 text-body font-normal text-carbon-warm placeholder:text-mercury focus:outline-none focus:border-carbon-warm/30 transition-colors"
                 placeholder="Su nombre"
               />
             </div>
@@ -49,7 +49,7 @@ export default function Contact() {
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
-                className="w-full bg-paper-white border border-carbon-warm/10 rounded-body px-4 py-3 text-body font-normal text-carbon-warm placeholder:text-mercury focus:outline-none focus:border-carbon-warm/30 transition-colors"
+                className="w-full bg-paper-white border border-carbon-warm/10 rounded-lg px-4 py-3 text-body font-normal text-carbon-warm placeholder:text-mercury focus:outline-none focus:border-carbon-warm/30 transition-colors"
                 placeholder="Su celular"
               />
             </div>
@@ -62,7 +62,7 @@ export default function Contact() {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full bg-paper-white border border-carbon-warm/10 rounded-body px-4 py-3 text-body font-normal text-carbon-warm placeholder:text-mercury focus:outline-none focus:border-carbon-warm/30 transition-colors"
+                className="w-full bg-paper-white border border-carbon-warm/10 rounded-lg px-4 py-3 text-body font-normal text-carbon-warm placeholder:text-mercury focus:outline-none focus:border-carbon-warm/30 transition-colors"
                 placeholder="Su email"
               />
             </div>
@@ -75,13 +75,13 @@ export default function Contact() {
                 value={formData.message}
                 onChange={handleChange}
                 rows={4}
-                className="w-full bg-paper-white border border-carbon-warm/10 rounded-body px-4 py-3 text-body font-normal text-carbon-warm placeholder:text-mercury focus:outline-none focus:border-carbon-warm/30 transition-colors resize-none"
+                className="w-full bg-paper-white border border-carbon-warm/10 rounded-lg px-4 py-3 text-body font-normal text-carbon-warm placeholder:text-mercury focus:outline-none focus:border-carbon-warm/30 transition-colors resize-none"
                 placeholder="Cuéntenos su necesidad"
               />
             </div>
             <button
               type="submit"
-              className="bg-carbon-warm text-white text-body-sm font-normal px-[22px] py-[18px] rounded-pills hover:bg-onyx-depth transition-colors"
+              className="bg-carbon-warm text-white text-body-sm font-normal px-[22px] py-[18px] rounded-lg hover:bg-onyx-depth transition-colors"
             >
               Enviar consulta
             </button>
