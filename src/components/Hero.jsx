@@ -23,13 +23,13 @@ export default function Hero() {
         <div className="mt-10 flex gap-4">
           <a
             href="#productos"
-            className="inline-block bg-carbon-warm text-white text-body-sm font-normal px-[22px] py-[18px] rounded-pills hover:bg-onyx-depth transition-colors"
+            className="inline-block bg-[#D42027] text-white text-body-sm font-normal px-[22px] py-[18px] rounded-lg hover:bg-onyx-depth transition-colors"
           >
             Descubrir equipos
           </a>
           <a
             href="#contacto"
-            className="inline-block border border-white text-white text-body-sm font-normal px-[22px] py-[18px] rounded-pills hover:bg-white/10 transition-colors"
+            className="inline-block border border-white text-white text-body-sm font-normal px-[22px] py-[18px] rounded-lg hover:bg-white/10 transition-colors"
           >
             Contacto
           </a>

@@ -20,7 +20,6 @@ export default function Contact() {
   return (
     <section id="contacto" className="bg-vellum py-24">
       <div className="max-w-page mx-auto px-6">
-        <SectionLabel>Contacto</SectionLabel>
         <h2 className="text-display font-light text-carbon-warm mb-16">
           Hablemos
         </h2>

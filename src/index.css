@@ -16,3 +16,13 @@
     -moz-osx-font-smoothing: grayscale;
   }
 }
+
+@keyframes pan-image {
+  0% { transform: scale(1) translateX(0); }
+  15% { transform: scale(1.1) translateX(0); }
+  100% { transform: scale(1.1) translateX(-5%); }
+}
+
+.group:hover .card-image-pan {
+  animation: pan-image 4s ease-out forwards;
+}
