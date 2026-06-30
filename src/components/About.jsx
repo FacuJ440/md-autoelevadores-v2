@@ -9,7 +9,7 @@ export default function About() {
           {/* Text */}
           <div>
             <SectionLabel>SOBRE NOSOTROS</SectionLabel>
-            <h2 className="text-display font-light text-[#D42027] mb-8">
+            <h2 className="text-5xl md:text-display font-light text-[#D42027] mb-8">
               MD Autoelevadores
             </h2>
             <p className="text-body font-normal text-carbon-warm mb-6">
