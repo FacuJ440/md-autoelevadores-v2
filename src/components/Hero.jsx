@@ -9,7 +9,7 @@ export default function Hero() {
         loop
         playsInline
       >
-        <source src="/slider_la_mejor_jugadora_para_tu_equipo.mp4" type="video/mp4" />
+        <source src={`${import.meta.env.BASE_URL}slider_la_mejor_jugadora_para_tu_equipo.mp4`} type="video/mp4" />
       </video>
       <div className="absolute inset-0 bg-gradient-to-t from-carbon-warm/80 via-carbon-warm/20 to-carbon-warm/40" />
 
