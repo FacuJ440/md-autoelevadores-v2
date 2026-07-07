@@ -75,7 +75,7 @@ export default function FeaturedProducts() {
               href={product.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="group bg-paper-white rounded-lg overflow-hidden flex flex-col hover:shadow-lg transition-shadow duration-300"
+              className="group bg-paper-white rounded-sm overflow-hidden flex flex-col hover:shadow-lg transition-shadow duration-300"
             >
               <div className="aspect-[4/3] overflow-hidden bg-gray-100">
                 <img
@@ -113,7 +113,7 @@ export default function FeaturedProducts() {
         <div className="mt-10 text-center">
           <Link
             to="/catalogo"
-            className="inline-block bg-carbon-warm text-white text-body-sm font-normal px-[22px] py-[18px] rounded-lg hover:bg-onyx-depth transition-colors"
+            className="inline-block bg-carbon-warm text-white text-body-sm font-normal px-[22px] py-[18px] rounded-sm hover:bg-onyx-depth transition-colors"
           >
             Ver todos los productos
           </Link>

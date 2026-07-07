@@ -43,7 +43,7 @@ export default function Services() {
           {services.map((service) => (
             <div
               key={service.title}
-              className="group relative w-full aspect-[4/3] rounded-lg shadow-[0_0_10px_5px_rgba(0,0,0,0.15)] transition-all duration-400 cursor-pointer hover:rounded-lg hover:shadow-[0_0_10px_5px_rgba(0,0,0,0.25)] overflow-hidden"
+              className="group relative w-full aspect-[4/3] rounded-sm shadow-[0_0_10px_5px_rgba(0,0,0,0.15)] transition-all duration-400 cursor-pointer hover:shadow-[0_0_10px_5px_rgba(0,0,0,0.25)] overflow-hidden"
             >
               {/* Image: stays visible, scales up on hover */}
               <img

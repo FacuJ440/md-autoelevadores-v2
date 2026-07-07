@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom'
 import SectionLabel from '@/components/SectionLabel'
+import StillDivider from '@/components/StillDivider'
 
 export default function About() {
   return (
+    <>
     <section className="bg-white py-16">
       <div className="max-w-page mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
@@ -20,14 +22,14 @@ export default function About() {
             </p>
             <Link
               to="/nosotros"
-              className="inline-block bg-[#D42027] text-white text-body-sm font-normal px-[22px] py-[18px] rounded-lg hover:bg-carbon-warm hover:text-white transition-colors"
+              className="inline-block bg-[#D42027] text-white text-body-sm font-normal px-[22px] py-[18px] rounded-sm hover:bg-carbon-warm hover:text-white transition-colors"
             >
               Conocer más
             </Link>
           </div>
 
           {/* Image */}
-          <div className="rounded-lg aspect-[4/3] overflow-hidden">
+          <div className="rounded-sm aspect-[4/3] overflow-hidden">
             <img
               src={`${import.meta.env.BASE_URL}lindebanner.webp`}
               alt="Linde Material Handling"
@@ -37,5 +39,7 @@ export default function About() {
         </div>
       </div>
     </section>
+    <StillDivider />
+    </>
   )
 }

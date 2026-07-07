@@ -1,4 +1,5 @@
 import SectionLabel from '@/components/SectionLabel'
+import StillDivider from '@/components/StillDivider'
 
 const activities = [
   {
@@ -50,7 +51,7 @@ export default function AboutPage() {
   return (
     <div className="bg-vellum">
       {/* Hero */}
-      <section className="relative min-h-screen flex items-end overflow-hidden">
+      <section className="relative min-h-[60vh] flex items-end overflow-hidden">
         <img
           src={`${import.meta.env.BASE_URL}lindebanner.webp`}
           alt="MD Autoelevadores"
@@ -66,6 +67,7 @@ export default function AboutPage() {
           </p>
         </div>
       </section>
+      <StillDivider />
 
       {/* Intro */}
       <section className="py-16">
@@ -92,7 +94,7 @@ export default function AboutPage() {
             {brands.map((brand) => (
               <span
                 key={brand}
-                className="bg-paper-white text-carbon-warm text-body-sm font-normal px-5 py-3 rounded-lg border border-carbon-warm/10"
+                className="bg-paper-white text-carbon-warm text-body-sm font-normal px-5 py-3 rounded-sm border border-carbon-warm/10"
               >
                 {brand}
               </span>
@@ -109,7 +111,7 @@ export default function AboutPage() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {activities.map((activity) => (
-              <div key={activity.title} className="bg-paper-white rounded-lg p-6">
+              <div key={activity.title} className="bg-paper-white rounded-sm p-6">
                 <h3 className="text-subheading font-bold text-[#D42027] mb-4">
                   {activity.title}
                 </h3>
@@ -135,7 +137,7 @@ export default function AboutPage() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {locations.map((loc) => (
-              <div key={loc.city} className="bg-paper-white rounded-lg p-6 flex gap-6 items-start">
+              <div key={loc.city} className="bg-paper-white rounded-sm p-6 flex gap-6 items-start">
                 <img
                   src={`${import.meta.env.BASE_URL}${loc.map}`}
                   alt={`Mapa ${loc.city}`}

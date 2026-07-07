@@ -36,7 +36,7 @@ export default function Contact() {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className="w-full bg-paper-white border border-carbon-warm/10 rounded-lg px-4 py-3 text-body font-normal text-carbon-warm placeholder:text-mercury focus:outline-none focus:border-carbon-warm/30 transition-colors"
+                className="w-full bg-paper-white border border-carbon-warm/10 rounded-sm px-4 py-3 text-body font-normal text-carbon-warm placeholder:text-mercury focus:outline-none focus:border-carbon-warm/30 transition-colors"
                 placeholder="Su nombre"
               />
             </div>
@@ -49,7 +49,7 @@ export default function Contact() {
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
-                className="w-full bg-paper-white border border-carbon-warm/10 rounded-lg px-4 py-3 text-body font-normal text-carbon-warm placeholder:text-mercury focus:outline-none focus:border-carbon-warm/30 transition-colors"
+                className="w-full bg-paper-white border border-carbon-warm/10 rounded-sm px-4 py-3 text-body font-normal text-carbon-warm placeholder:text-mercury focus:outline-none focus:border-carbon-warm/30 transition-colors"
                 placeholder="Su celular"
               />
             </div>
@@ -62,7 +62,7 @@ export default function Contact() {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full bg-paper-white border border-carbon-warm/10 rounded-lg px-4 py-3 text-body font-normal text-carbon-warm placeholder:text-mercury focus:outline-none focus:border-carbon-warm/30 transition-colors"
+                className="w-full bg-paper-white border border-carbon-warm/10 rounded-sm px-4 py-3 text-body font-normal text-carbon-warm placeholder:text-mercury focus:outline-none focus:border-carbon-warm/30 transition-colors"
                 placeholder="Su email"
               />
             </div>
@@ -75,13 +75,13 @@ export default function Contact() {
                 value={formData.message}
                 onChange={handleChange}
                 rows={4}
-                className="w-full bg-paper-white border border-carbon-warm/10 rounded-lg px-4 py-3 text-body font-normal text-carbon-warm placeholder:text-mercury focus:outline-none focus:border-carbon-warm/30 transition-colors resize-none"
+                className="w-full bg-paper-white border border-carbon-warm/10 rounded-sm px-4 py-3 text-body font-normal text-carbon-warm placeholder:text-mercury focus:outline-none focus:border-carbon-warm/30 transition-colors resize-none"
                 placeholder="Cuéntenos su necesidad"
               />
             </div>
             <button
               type="submit"
-              className="bg-carbon-warm text-white text-body-sm font-normal px-[22px] py-[18px] rounded-lg hover:bg-onyx-depth transition-colors"
+              className="bg-carbon-warm text-white text-body-sm font-normal px-[22px] py-[18px] rounded-sm hover:bg-onyx-depth transition-colors"
             >
               Enviar consulta
             </button>

@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, useLayoutEffect } from 'react'
+import { Link } from 'react-router-dom'
 
 const navItems = [
   {
@@ -30,6 +31,7 @@ const navItems = [
   { label: 'Baterías Industriales', href: '#productos' },
   { label: 'Alquiler', href: '#servicios' },
   { label: 'Servicio Técnico', href: '#servicios' },
+  { label: 'Contacto', href: '/contacto' },
 ]
 
 const Chevron = ({ open }) => (
@@ -98,8 +100,8 @@ export default function Navbar() {
       {/* Top bar */}
       <div className="fixed top-6 left-0 right-0 z-50 flex items-start justify-between px-8">
         {/* Logo */}
-        <a
-          href="/"
+        <Link
+          to="/"
           onClick={(e) => {
             if (window.location.pathname === '/') {
               e.preventDefault()
@@ -112,11 +114,11 @@ export default function Navbar() {
             alt="MD Autoelevadores"
             className={`h-14 md:h-20 w-auto transition-all duration-300 ease-in-out ${isOpen ? '-translate-x-[200%] opacity-0' : 'translate-x-0 opacity-100'}`}
           />
-        </a>
+        </Link>
 
         {/* Nav pill — grows downward without moving */}
         <nav
-          className="bg-[#1a1a1a]/70 backdrop-blur-md rounded-[24px] px-6 py-4"
+          className="bg-[#1a1a1a]/70 backdrop-blur-md rounded-sm px-6 py-4"
           onMouseLeave={() => setExpandedItem(null)}
         >
           {/* Desktop */}
@@ -137,6 +139,15 @@ export default function Navbar() {
                       <Chevron open={expandedItem === item.label} />
                     </button>
                   </div>
+                ) : item.href.startsWith('/') ? (
+                  <Link
+                    key={item.label}
+                    to={item.href}
+                    onClick={() => setExpandedItem(null)}
+                    className="text-white text-xs font-normal hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.6)] transition-all duration-200 whitespace-nowrap"
+                  >
+                    {item.label}
+                  </Link>
                 ) : (
                   <a
                     key={item.label}
@@ -167,9 +178,9 @@ export default function Navbar() {
             className="md:hidden relative w-10 h-[20px] cursor-pointer block"
             aria-label="Toggle menu"
           >
-            <span className={`block absolute h-1 w-full bg-white rounded-[9px] left-0 transition-all duration-250 ease-in-out ${isOpen ? 'rotate-45 top-0 left-[5px]' : 'top-0'}`} style={{ transformOrigin: 'left center' }} />
-            <span className={`block absolute h-1 w-full bg-white rounded-[9px] left-0 transition-all duration-250 ease-in-out top-1/2 -translate-y-1/2 ${isOpen ? 'w-0 opacity-0' : ''}`} style={{ transformOrigin: 'left center' }} />
-            <span className={`block absolute h-1 w-full bg-white rounded-[9px] left-0 transition-all duration-250 ease-in-out ${isOpen ? '-rotate-45 top-[28px] left-[5px]' : 'top-full -translate-y-full'}`} style={{ transformOrigin: 'left center' }} />
+            <span className={`block absolute h-1 w-full bg-white left-0 transition-all duration-250 ease-in-out ${isOpen ? 'rotate-45 top-0 left-[5px]' : 'top-0'}`} style={{ transformOrigin: 'left center' }} />
+            <span className={`block absolute h-1 w-full bg-white left-0 transition-all duration-250 ease-in-out top-1/2 -translate-y-1/2 ${isOpen ? 'w-0 opacity-0' : ''}`} style={{ transformOrigin: 'left center' }} />
+            <span className={`block absolute h-1 w-full bg-white left-0 transition-all duration-250 ease-in-out ${isOpen ? '-rotate-45 top-[28px] left-[5px]' : 'top-full -translate-y-full'}`} style={{ transformOrigin: 'left center' }} />
           </button>
         </nav>
       </div>
@@ -208,6 +219,14 @@ export default function Navbar() {
                     </div>
                   </div>
                 </>
+              ) : item.href.startsWith('/') ? (
+                <Link
+                  to={item.href}
+                  onClick={() => setIsOpen(false)}
+                  className="text-white text-body font-normal hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.6)] transition-all duration-200"
+                >
+                  {item.label}
+                </Link>
               ) : (
                 <a
                   href={item.href}

@@ -170,7 +170,7 @@ export default function Products() {
                 {section.subsections.map((sub) => (
                   <div
                     key={sub.title}
-                    className="bg-vellum rounded-lg p-5"
+                    className="bg-vellum rounded-sm p-5"
                   >
                     <h4 className="text-body font-bold text-carbon-warm mb-3">
                       {sub.title}
@@ -198,7 +198,7 @@ export default function Products() {
         <div className="mt-12">
           <a
             href="#contacto"
-            className="inline-block bg-carbon-warm text-white text-body-sm font-normal px-[22px] py-[18px] rounded-lg hover:bg-onyx-depth transition-colors"
+            className="inline-block bg-carbon-warm text-white text-body-sm font-normal px-[22px] py-[18px] rounded-sm hover:bg-onyx-depth transition-colors"
           >
             Consultar por equipos
           </a>
