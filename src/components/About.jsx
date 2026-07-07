@@ -3,7 +3,7 @@ import SectionLabel from '@/components/SectionLabel'
 
 export default function About() {
   return (
-    <section className="bg-vellum py-24">
+    <section className="bg-white py-16">
       <div className="max-w-page mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
           {/* Text */}
@@ -15,12 +15,12 @@ export default function About() {
             <p className="text-body font-normal text-carbon-warm mb-6">
               Concesionario oficial en Zona Cuyo de Linde Material Handling. Calidad y tecnología al alcance de todos.
             </p>
-            <p className="text-body font-normal text-mercury mb-8">
+            <p className="text-body font-normal text-mercury mb-6">
               Representantes en Mendoza, San Juan y San Luis de toda la línea de autoelevadores Linde, Still, Hako, baterías Hoppecke, equipos hidráulicos, CVS Ferrari y Battioni Pagani. Cerramientos industriales, puertas rápidas, plataformas y más.
             </p>
             <Link
               to="/nosotros"
-              className="inline-block border border-carbon-warm text-carbon-warm text-body-sm font-normal px-[22px] py-[18px] rounded-lg hover:bg-carbon-warm hover:text-white transition-colors"
+              className="inline-block bg-[#D42027] text-white text-body-sm font-normal px-[22px] py-[18px] rounded-lg hover:bg-carbon-warm hover:text-white transition-colors"
             >
               Conocer más
             </Link>

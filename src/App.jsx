@@ -8,6 +8,7 @@ import FeaturedProducts from '@/components/FeaturedProducts'
 import Contact from '@/components/Contact'
 import Footer from '@/components/Footer'
 import WhatsAppButton from '@/components/WhatsAppButton'
+import ScrollToTopButton from '@/components/ScrollToTopButton'
 import CatalogPage from '@/pages/CatalogPage'
 import AboutPage from '@/pages/AboutPage'
 
@@ -44,6 +45,7 @@ function App() {
         </Routes>
         <Footer />
         <WhatsAppButton />
+        <ScrollToTopButton />
       </div>
     </HashRouter>
   )

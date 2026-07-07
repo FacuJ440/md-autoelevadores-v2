@@ -100,9 +100,9 @@ export default function Contact() {
             <div>
               <h3 className="text-subheading font-normal text-carbon-warm mb-3">San Juan</h3>
               <p className="text-body font-normal text-mercury">
-                Saturnino Sarassa 464 Este<br />
-                Ciudad - San Juan (5400)<br />
-                Tel: (0264) 421-4057 / 421-2067
+                Ruta 20 km 5.5<br />
+                Santa Lucía - San Juan (5411)<br />
+                Tel: (0264) 486-7943 
               </p>
             </div>
             <div>
@@ -115,10 +115,10 @@ export default function Contact() {
             <div>
               <h3 className="text-subheading font-normal text-carbon-warm mb-3">Email</h3>
               <a
-                href="mailto:info@mdautoelevadores.com.ar"
+                href="mailto:info@mdautoelevadores.com"
                 className="text-body font-normal text-carbon-warm hover:text-mercury transition-colors"
               >
-                info@mdautoelevadores.com.ar
+                info@mdautoelevadores.com
               </a>
             </div>
           </div>

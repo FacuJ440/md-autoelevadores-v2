@@ -38,7 +38,7 @@ const locations = [
   },
   {
     city: 'San Juan',
-    address: 'Saturnino Sarassa 464 Este (5400) - Ciudad',
+    address: 'Ruta 20 km 5.5 (5411) - Santa Lucía',
     phone: '(0264) 421-4057 / 421-2067',
     map: 'sanjuan.png',
   },
