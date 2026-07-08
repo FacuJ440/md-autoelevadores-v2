@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import SectionLabel from '@/components/SectionLabel'
 import StillDivider from '@/components/StillDivider'
+import BackButton from '@/components/BackButton'
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -185,6 +186,7 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
+      <BackButton />
     </div>
   )
 }

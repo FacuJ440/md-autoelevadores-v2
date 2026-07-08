@@ -1,5 +1,6 @@
 import SectionLabel from '@/components/SectionLabel'
 import StillDivider from '@/components/StillDivider'
+import BackButton from '@/components/BackButton'
 
 const activities = [
   {
@@ -162,6 +163,7 @@ export default function AboutPage() {
           </p>
         </div>
       </section>
+      <BackButton />
     </div>
   )
 }

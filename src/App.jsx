@@ -9,6 +9,7 @@ import Footer from '@/components/Footer'
 import WhatsAppButton from '@/components/WhatsAppButton'
 import ScrollToTopButton from '@/components/ScrollToTopButton'
 import CatalogPage from '@/pages/CatalogPage'
+import ProductDetailPage from '@/pages/ProductDetailPage'
 import AboutPage from '@/pages/AboutPage'
 import ContactPage from '@/pages/ContactPage'
 
@@ -40,6 +41,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/catalogo" element={<CatalogPage />} />
+          <Route path="/catalogo/:brandSlug/:productSlug" element={<ProductDetailPage />} />
           <Route path="/nosotros" element={<AboutPage />} />
           <Route path="/contacto" element={<ContactPage />} />
         </Routes>

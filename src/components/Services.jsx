@@ -1,4 +1,5 @@
 import SectionLabel from '@/components/SectionLabel'
+import { Link } from 'react-router-dom'
 
 const services = [
   {
@@ -41,9 +42,10 @@ export default function Services() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {services.map((service) => (
-            <div
+            <Link
               key={service.title}
-              className="group relative w-full aspect-[4/3] rounded-sm shadow-[0_0_10px_5px_rgba(0,0,0,0.15)] transition-all duration-400 cursor-pointer hover:shadow-[0_0_10px_5px_rgba(0,0,0,0.25)] overflow-hidden"
+              to="/contacto"
+              className="group relative w-full aspect-[4/3] rounded-sm shadow-[0_0_10px_5px_rgba(0,0,0,0.15)] transition-all duration-400 cursor-pointer hover:shadow-[0_0_10px_5px_rgba(0,0,0,0.25)] overflow-hidden block"
             >
               {/* Image: stays visible, scales up on hover */}
               <img
@@ -67,14 +69,13 @@ export default function Services() {
                 <p className="text-white/80 text-body-sm text-center leading-relaxed">
                   {service.description}
                 </p>
-                <a
-                  href="#contacto"
-                  className="mt-4 inline-block text-body-sm font-bold text-white hover:text-mercury transition-colors"
+                <span
+                  className="mt-4 inline-block text-body-sm font-bold text-white"
                 >
                   Solicitar información →
-                </a>
+                </span>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
