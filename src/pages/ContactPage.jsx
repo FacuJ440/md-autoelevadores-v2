@@ -43,7 +43,7 @@ export default function ContactPage() {
       {/* Content */}
       <section className="py-16">
         <div className="max-w-page mx-auto px-6">
-          <SectionLabel>CONTACTO</SectionLabel>
+          {/* <SectionLabel>CONTACTO</SectionLabel> */}
           <h2 className="text-display font-light text-carbon-warm mb-16">
             Hablemos
           </h2>

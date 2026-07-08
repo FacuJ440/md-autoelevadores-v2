@@ -25,12 +25,12 @@ export default function Hero() {
             Representantes oficiales Linde y Still en Cuyo. Autoelevadores, servicio técnico y alquiler en Mendoza, San Juan y San Luis.
           </p>
           <div className="mt-10 flex gap-4">
-            <a
-              href="#productos"
+            <Link
+              to="/catalogo"
               className="inline-block bg-[#D42027] text-white text-body-sm font-normal px-[22px] py-[18px] rounded-sm hover:bg-onyx-depth transition-colors"
             >
               Descubrir equipos
-            </a>
+            </Link>
             <Link
               to="/contacto"
               className="inline-block border border-white text-white text-body-sm font-normal px-[22px] py-[18px] rounded-sm hover:bg-white/10 transition-colors"
