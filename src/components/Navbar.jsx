@@ -28,9 +28,9 @@ const navItems = [
       { label: 'Autoelevador eléctrico', href: 'https://www.mdautoelevadores.com.ar/still-es/autoelevador-electrico/' },
     ],
   },
-  { label: 'Baterías Industriales', href: '#productos' },
-  { label: 'Alquiler', href: '#servicios' },
-  { label: 'Servicio Técnico', href: '#servicios' },
+  { label: 'Catálogo', href: '/catalogo' },
+  { label: 'Servicios', href: '/servicios' },
+  { label: 'Sobre Nosotros', href: '/nosotros' },
   { label: 'Contacto', href: '/contacto' },
 ]
 

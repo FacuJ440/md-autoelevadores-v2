@@ -11,6 +11,7 @@ import ScrollToTopButton from '@/components/ScrollToTopButton'
 import CatalogPage from '@/pages/CatalogPage'
 import ProductDetailPage from '@/pages/ProductDetailPage'
 import AboutPage from '@/pages/AboutPage'
+import ServicesPage from '@/pages/ServicesPage'
 import ContactPage from '@/pages/ContactPage'
 
 function HomePage() {
@@ -43,6 +44,7 @@ function App() {
           <Route path="/catalogo" element={<CatalogPage />} />
           <Route path="/catalogo/:brandSlug/:productSlug" element={<ProductDetailPage />} />
           <Route path="/nosotros" element={<AboutPage />} />
+          <Route path="/servicios" element={<ServicesPage />} />
           <Route path="/contacto" element={<ContactPage />} />
         </Routes>
         <Footer />
