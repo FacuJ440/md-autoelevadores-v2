@@ -1,176 +1,17 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { catalogCategories } from '@/data/catalogData'
 
-const catalogSections = [
-  {
-    title: 'Autoelevadores Linde',
-    slug: 'linde',
-    logo: 'logo-linde.png',
-    image: 'maquinarias-linde.webp',
-    description: 'Tecnología alemana de última generación. Autoelevadores térmicos, eléctricos y automatizados para máxima eficiencia.',
-    subsections: [
-      {
-        title: 'Autoelevadores Térmicos',
-        products: [
-          { name: 'H 14-20 EVO', slug: 'h-14-20-evo', href: 'https://www.mdautoelevadores.com.ar/elevadores-linde/elevadores-termicos/elevadores-h-14-20-evo/' },
-          { name: 'H 20-25 EVO', slug: 'h-20-25-evo', href: 'https://www.mdautoelevadores.com.ar/elevadores-linde/elevadores-termicos/elevadores-h-20-25-evo/' },
-        ],
-      },
-      {
-        title: 'Autoelevadores Eléctricos',
-        products: [
-          { name: 'E16 - E20 EVO', slug: 'e16-e20-evo', href: 'https://www.mdautoelevadores.com.ar/elevadores-linde/elevadores-electricos/e16-e20-evo/' },
-          { name: 'E12 - E20 EVO', slug: 'e12-e20-evo', href: 'https://www.mdautoelevadores.com.ar/elevadores-linde/elevadores-electricos/e12-e20-evo/' },
-        ],
-      },
-      {
-        title: 'Apiladores de Pallet',
-        products: [
-          { name: 'L06 - L16 AC', slug: 'l06-l16-ac', href: 'https://www.mdautoelevadores.com.ar/elevadores-linde/apiladores-de-pallet/l06-l16-ac/' },
-          { name: 'L14 - L20 AP', slug: 'l14-l20-ap', href: 'https://www.mdautoelevadores.com.ar/elevadores-linde/apiladores-de-pallet/' },
-        ],
-      },
-      {
-        title: 'Transpaletas Eléctricas',
-        products: [
-          { name: 'CiTi one', slug: 'citi-one', href: 'https://www.mdautoelevadores.com.ar/elevadores-linde/transpaletas-electricas/citi-one/' },
-        ],
-      },
-      {
-        title: 'Recogedores de Pedidos',
-        products: [
-          { name: 'N20 Vi / VLi', slug: 'n20-vi-vli', href: 'https://www.mdautoelevadores.com.ar/elevadores-linde/recogedores-de-pedidos/n20-vi-vli/' },
-          { name: 'V10', slug: 'v10', href: 'https://www.mdautoelevadores.com.ar/elevadores-linde/recogedores-de-pedidos/v10/' },
-        ],
-      },
-      {
-        title: 'Autoelevadores Retráctiles',
-        products: [
-          { name: 'R10 - R16 B', slug: 'r10-r16-b', href: 'https://www.mdautoelevadores.com.ar/elevadores-linde/elevadores-retractiles/r10-r16-b/' },
-        ],
-      },
-      {
-        title: 'Pasillo Muy Estrecho',
-        products: [
-          { name: 'K', slug: 'k', href: 'https://www.mdautoelevadores.com.ar/elevadores-linde/elevadores-de-pasillo-muy-estrecho/k/' },
-        ],
-      },
-      {
-        title: 'Trenes Logísticos',
-        products: [
-          { name: 'FT08 - FT20 C', slug: 'ft08-ft20-c', href: 'https://www.mdautoelevadores.com.ar/elevadores-linde/trenes-logisticos/ft08-ft20-c/' },
-        ],
-      },
-      {
-        title: 'Tractores de Remolque',
-        products: [
-          { name: 'P60 - P80, W08', slug: 'p60-p80-w08', href: 'https://www.mdautoelevadores.com.ar/elevadores-linde/tractores-de-remolque/p60-p80-w08/' },
-        ],
-      },
-      {
-        title: 'Automatizados',
-        products: [
-          { name: 'K-MATIC', slug: 'k-matic', href: 'https://www.mdautoelevadores.com.ar/elevadores-linde/elevadores-automatizados/k-matic/' },
-        ],
-      },
-    ],
-  },
-  {
-    title: 'Still',
-    slug: 'still',
-    logo: 'still-logo.png',
-    image: 'still-1.webp',
-    description: 'Soluciones robustas de manipulación. Apiladores, retráctiles y autoelevadores a combustión y eléctricos.',
-    subsections: [
-      {
-        title: 'Apilador Eléctrico',
-        products: [
-          { name: 'EGV 14/16', slug: 'egv-14-16', href: 'https://www.mdautoelevadores.com.ar/still-es/apilador-electrico/apilador-electrico-egv-14-16/' },
-        ],
-      },
-      {
-        title: 'Apilador Retráctil',
-        products: [
-          { name: 'FM-X 17', slug: 'fm-x-17', href: 'https://www.mdautoelevadores.com.ar/still-es/apilador-retractil/apilador-retractil-fm-x-17/' },
-        ],
-      },
-      {
-        title: 'Autoelevadores Combustión',
-        products: [
-          { name: 'RC 44-25 C DUPLEX', slug: 'rc-44-25-c-duplex', href: 'https://www.mdautoelevadores.com.ar/still-es/autoelevadores-combustion/autoelevador-a-combustion-rc-44-25-c-duplex/' },
-        ],
-      },
-      {
-        title: 'Autoelevador Eléctrico',
-        products: [
-          { name: 'RX 60', slug: 'rx-60', href: 'https://www.mdautoelevadores.com.ar/still-es/autoelevador-electrico/' },
-          { name: 'RX 70-20/35 Híbrida', slug: 'rx-70-20-35-hibrida', href: 'https://www.mdautoelevadores.com.ar/still-es/autoelevadores-combustion/' },
-        ],
-      },
-    ],
-  },
-  {
-    title: 'Baterías Industriales',
-    slug: 'baterias',
-    logo: 'png-transparent-hoppecke-hd-logo.png',
-    image: 'baterias-hop.webp',
-    description: 'Energía confiable para su flota. Baterías traccionarias, cargadores y soluciones Li-Ion Hoppecke.',
-    subsections: [
-      {
-        title: 'Hoppecke',
-        products: [
-          { name: 'OpzS', slug: 'opzs', href: 'https://www.mdautoelevadores.com.ar/baterias-industriales/opzs/' },
-          { name: 'Tracción', slug: 'traccion', href: 'https://www.mdautoelevadores.com.ar/baterias-industriales/' },
-          { name: 'Cargadores', slug: 'cargadores', href: 'https://www.mdautoelevadores.com.ar/baterias-industriales/' },
-          { name: 'Energía Li-Ion', slug: 'energia-li-ion', href: 'https://www.mdautoelevadores.com.ar/baterias-industriales/' },
-        ],
-      },
-    ],
-  },
-  {
-    title: 'Equipos Especiales',
-    slug: 'equipos-especiales',
-    logo: 'CVS-logo-top-retina.png',
-    image: 'still-2.webp',
-    description: 'Equipos hidráulicos, cerramientos industriales, plataformas y puertas rápidas.',
-    subsections: [
-      {
-        title: 'Equipos Hidráulicos',
-        products: [
-          { name: 'CVS Ferrari', slug: 'cvs-ferrari', href: 'https://www.mdautoelevadores.com.ar/equipos-especiales/' },
-          { name: 'Battioni Pagani', slug: 'battioni-pagani', href: 'https://www.mdautoelevadores.com.ar/equipos-especiales/' },
-        ],
-      },
-      {
-        title: 'Cerramientos Industriales',
-        products: [
-          { name: 'Plataformas Tijera', slug: 'plataformas-tijera', href: 'https://www.mdautoelevadores.com.ar/cerramientos-industriales/plataformas-tijera/' },
-          { name: 'Puertas Rápidas', slug: 'puertas-rapidas', href: 'https://www.mdautoelevadores.com.ar/cerramientos-industriales/' },
-        ],
-      },
-    ],
-  },
-]
-
-export { catalogSections }
-
-/* Chevron icon for accordion */
-function Chevron({ open }) {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={`w-5 h-5 transition-transform duration-300 ${open ? 'rotate-180' : ''}`}
-    >
-      <path d="M6 9l6 6 6-6" />
-    </svg>
-  )
+/* Derive unique brands from data */
+const brandLogos = {
+  linde: 'logo-linde.png',
+  still: 'still-logo.png',
 }
+
+const brands = [...new Set(catalogCategories.map((c) => c.brandSlug))].map((slug) => {
+  const cat = catalogCategories.find((c) => c.brandSlug === slug)
+  return { name: cat.brand, slug, logo: brandLogos[slug] || null }
+})
 
 /* Search icon */
 function SearchIcon() {
@@ -191,14 +32,148 @@ function SearchIcon() {
   )
 }
 
+/* Placeholder image icon */
+function PlaceholderImage() {
+  return (
+    <div className="w-full h-full bg-carbon-warm/5 flex items-center justify-center">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="w-10 h-10 text-mercury/40"
+      >
+        <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+        <circle cx="8.5" cy="8.5" r="1.5" />
+        <path d="M21 15l-5-5L5 21" />
+      </svg>
+    </div>
+  )
+}
+
+/* ── Scrollable tab strip with arrows ── */
+function ScrollableTabs({ items, activeKey, onSelect, colorActive = 'bg-[#D42027] text-white', isBrandLevel = false }) {
+  const ref = useRef(null)
+  const [canLeft, setCanLeft] = useState(false)
+  const [canRight, setCanRight] = useState(false)
+
+  const update = () => {
+    const el = ref.current
+    if (!el) return
+    setCanLeft(el.scrollLeft > 2)
+    setCanRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 2)
+  }
+
+  useEffect(() => {
+    update()
+    const el = ref.current
+    if (!el) return
+    el.addEventListener('scroll', update, { passive: true })
+    window.addEventListener('resize', update)
+    return () => {
+      el.removeEventListener('scroll', update)
+      window.removeEventListener('resize', update)
+    }
+  }, [items])
+
+  /* Scroll active into view */
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const btn = el.querySelector('[data-active="true"]')
+    if (btn) btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
+  }, [activeKey])
+
+  const scroll = (dir) => {
+    const el = ref.current
+    if (!el) return
+    el.scrollBy({ left: dir === 'left' ? -el.clientWidth * 0.6 : el.clientWidth * 0.6, behavior: 'smooth' })
+  }
+
+  return (
+    <div className="relative">
+      {canLeft && (
+        <button
+          onClick={() => scroll('left')}
+          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-8 h-8 flex items-center justify-center bg-paper-white border border-carbon-warm/10 rounded-full shadow-md hover:bg-carbon-warm/5 transition-colors -ml-0.5"
+          aria-label="Anterior"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-3.5 h-3.5 text-carbon-warm">
+            <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
+          </svg>
+        </button>
+      )}
+
+      <div
+        ref={ref}
+        className="flex gap-1.5 overflow-x-auto scrollbar-hide py-1 px-1"
+        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+      >
+        {items.map((item) => (
+          <button
+            key={item.key}
+            data-active={activeKey === item.key ? 'true' : 'false'}
+            onClick={() => onSelect(item.key)}
+            className={`flex-shrink-0 flex items-center gap-2 px-3 py-1.5 text-label font-normal rounded-sm transition-all duration-200 whitespace-nowrap ${
+              activeKey === item.key
+                ? colorActive
+                : 'bg-paper-white text-carbon-warm hover:bg-carbon-warm/5'
+            }`}
+          >
+            {isBrandLevel && item.logo && (
+              <img
+                src={`${import.meta.env.BASE_URL}${item.logo}`}
+                alt={item.label}
+                className="h-4 w-auto object-contain transition-all duration-200"
+              />
+            )}
+            <span>{item.label}</span>
+          </button>
+        ))}
+      </div>
+
+      {canRight && (
+        <button
+          onClick={() => scroll('right')}
+          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-8 h-8 flex items-center justify-center bg-paper-white border border-carbon-warm/10 rounded-full shadow-md hover:bg-carbon-warm/5 transition-colors -mr-0.5"
+          aria-label="Siguiente"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-3.5 h-3.5 text-carbon-warm">
+            <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+          </svg>
+        </button>
+      )}
+
+      {canLeft && (
+        <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-vellum to-transparent pointer-events-none z-[5]" />
+      )}
+      {canRight && (
+        <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-vellum to-transparent pointer-events-none z-[5]" />
+      )}
+    </div>
+  )
+}
+
+/* ── Main component ── */
 export default function Products() {
-  const [expandedBrands, setExpandedBrands] = useState(catalogSections.map((s) => s.slug))
+  const [activeBrand, setActiveBrand] = useState(brands[0].slug)
+  const [activeCategory, setActiveCategory] = useState(catalogCategories[0].slug)
   const [searchQuery, setSearchQuery] = useState('')
 
-  const toggleBrand = (slug) => {
-    setExpandedBrands((prev) =>
-      prev.includes(slug) ? prev.filter((s) => s !== slug) : [...prev, slug]
-    )
+  /* Categories for the active brand */
+  const brandCategories = useMemo(
+    () => catalogCategories.filter((c) => c.brandSlug === activeBrand),
+    [activeBrand]
+  )
+
+  /* When brand changes, select its first category */
+  const handleBrandChange = (slug) => {
+    setActiveBrand(slug)
+    const first = catalogCategories.find((c) => c.brandSlug === slug)
+    if (first) setActiveCategory(first.slug)
   }
 
   /* Flatten all products for search */
@@ -206,41 +181,39 @@ export default function Products() {
     if (!searchQuery.trim()) return []
     const q = searchQuery.toLowerCase()
     const results = []
-    catalogSections.forEach((section) => {
-      section.subsections.forEach((sub) => {
-        sub.products.forEach((product) => {
-          if (
-            product.name.toLowerCase().includes(q) ||
-            sub.title.toLowerCase().includes(q) ||
-            section.title.toLowerCase().includes(q)
-          ) {
-            results.push({
-              ...product,
-              category: sub.title,
-              brand: section.title,
-              brandSlug: section.slug,
-            })
-          }
-        })
+    catalogCategories.forEach((cat) => {
+      cat.products.forEach((product) => {
+        if (
+          product.name.toLowerCase().includes(q) ||
+          cat.title.toLowerCase().includes(q) ||
+          product.brand.toLowerCase().includes(q) ||
+          product.description.toLowerCase().includes(q)
+        ) {
+          results.push({ ...product, category: cat.title, categorySlug: cat.slug })
+        }
       })
     })
     return results
   }, [searchQuery])
 
   const isSearching = searchQuery.trim().length > 0
+  const currentCategory = catalogCategories.find((c) => c.slug === activeCategory)
+
+  /* Brand tab items */
+  const brandItems = brands.map((b) => ({ key: b.slug, label: b.name, logo: b.logo }))
+
+  /* Category tab items — strip brand name from label to avoid redundancy */
+  const categoryItems = brandCategories.map((c) => {
+    const brandName = brands.find((b) => b.slug === activeBrand)?.name || ''
+    const label = c.title.replace(new RegExp(`\\s*${brandName}\\s*`, 'i'), '').trim() || c.title
+    return { key: c.slug, label }
+  })
 
   return (
     <section id="productos" className="bg-vellum py-24">
       <div className="max-w-page mx-auto px-6">
-        {/* <h2 className="text-display font-light text-[#D42027] mb-4">
-          Catálogo
-        </h2> */}
-        {/* <p className="text-body font-normal text-mercury mb-12">
-          Toda nuestra línea de equipos y soluciones industriales
-        </p> */}
-
         {/* Search bar */}
-        <div className="relative mb-16">
+        <div className="relative mb-10">
           <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-mercury">
             <SearchIcon />
           </div>
@@ -261,19 +234,37 @@ export default function Products() {
                 No se encontraron resultados para &ldquo;{searchQuery}&rdquo;
               </p>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {searchResults.map((product) => (
                   <Link
                     key={product.slug}
-                    to={`/catalogo/${product.brandSlug}/${product.slug}`}
-                    className="bg-paper-white rounded-sm p-5 hover:border-[#D42027]/30 border border-transparent transition-colors"
+                    to={`/catalogo/${product.categorySlug}/${product.slug}`}
+                    className="group bg-paper-white rounded-sm overflow-hidden hover:shadow-lg transition-shadow duration-300"
                   >
-                    <span className="text-label font-normal text-[#D42027] uppercase tracking-wider">
-                      {product.brand} · {product.category}
-                    </span>
-                    <h4 className="text-body font-bold text-carbon-warm mt-1">
-                      {product.name}
-                    </h4>
+                    <div className="aspect-[4/3] overflow-hidden bg-carbon-warm/5">
+                      {product.image ? (
+                        <img
+                          src={`${import.meta.env.BASE_URL}${product.image}`}
+                          alt={product.name}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                      ) : (
+                        <PlaceholderImage />
+                      )}
+                    </div>
+                    <div className="p-5">
+                      <span className="text-label font-normal text-[#D42027] uppercase tracking-wider">
+                        {product.brand} · {product.category}
+                      </span>
+                      <h4 className="text-subheading font-bold text-carbon-warm mt-1 group-hover:text-[#D42027] transition-colors">
+                        {product.name}
+                      </h4>
+                      {product.description && (
+                        <p className="text-body-sm font-normal text-mercury mt-2 line-clamp-2">
+                          {product.description}
+                        </p>
+                      )}
+                    </div>
                   </Link>
                 ))}
               </div>
@@ -281,65 +272,72 @@ export default function Products() {
           </div>
         )}
 
-        {/* Brand sections (hidden while searching) */}
+        {/* Brand + Category tabs + product grid (hidden while searching) */}
         {!isSearching && (
-          <div className="space-y-6">
-            {catalogSections.map((section) => {
-              const isOpen = expandedBrands.includes(section.slug)
-              return (
-                <div key={section.slug} className="bg-paper-white rounded-sm overflow-hidden">
-                  {/* Brand header — clickable accordion */}
-                  <button
-                    onClick={() => toggleBrand(section.slug)}
-                    className="w-full flex items-center gap-5 p-6 text-left hover:bg-vellum/50 transition-colors"
-                  >
-                    <img
-                      src={`${import.meta.env.BASE_URL}${section.logo}`}
-                      alt={section.title}
-                      className="h-12 w-auto object-contain flex-shrink-0"
-                    />
-                    <div className="flex-1 min-w-0">
-                      <h3 className="text-heading font-light text-carbon-warm">
-                        {section.title}
-                      </h3>
-                      <p className="text-body-sm font-normal text-mercury mt-1 line-clamp-1">
-                        {section.description}
-                      </p>
-                    </div>
-                    <Chevron open={isOpen} />
-                  </button>
+          <>
+            {/* Brand tabs (top level) — dark style with logos */}
+            <div className="mb-4">
+              <ScrollableTabs
+                items={brandItems}
+                activeKey={activeBrand}
+                onSelect={handleBrandChange}
+                colorActive="bg-[#D42027] text-white shadow-md ring-1 ring-[#D42027]/30"
+                isBrandLevel
+              />
+            </div>
 
-                  {/* Accordion content */}
-                  <div
-                    className={`transition-all duration-300 overflow-hidden ${isOpen ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'}`}
+            {/* Category tabs (second level) — red style */}
+            <div className="mb-10">
+              <ScrollableTabs
+                items={categoryItems}
+                activeKey={activeCategory}
+                onSelect={setActiveCategory}
+              />
+            </div>
+
+            {/* Product grid for active category */}
+            {currentCategory && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {currentCategory.products.map((product) => (
+                  <Link
+                    key={product.slug}
+                    to={`/catalogo/${currentCategory.slug}/${product.slug}`}
+                    className="group bg-paper-white rounded-sm overflow-hidden hover:shadow-lg transition-shadow duration-300"
                   >
-                    <div className="px-6 pb-6 border-t border-carbon-warm/5">
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
-                        {section.subsections.map((sub) => (
-                          <div key={sub.title} className="bg-vellum rounded-sm p-5">
-                            <h4 className="text-body font-bold text-carbon-warm mb-3">
-                              {sub.title}
-                            </h4>
-                            <div className="flex flex-col gap-1.5">
-                              {sub.products.map((product) => (
-                                <Link
-                                  key={product.slug}
-                                  to={`/catalogo/${section.slug}/${product.slug}`}
-                                  className="text-body-sm font-normal text-mercury hover:text-[#D42027] transition-colors duration-200"
-                                >
-                                  {product.name}
-                                </Link>
-                              ))}
-                            </div>
-                          </div>
-                        ))}
+                    <div className="aspect-[4/3] overflow-hidden bg-carbon-warm/5">
+                      {product.image ? (
+                        <img
+                          src={`${import.meta.env.BASE_URL}${product.image}`}
+                          alt={product.name}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                      ) : (
+                        <PlaceholderImage />
+                      )}
+                    </div>
+                    <div className="p-6">
+                      <span className="text-label font-normal text-[#D42027] uppercase tracking-wider">
+                        {product.brand}
+                      </span>
+                      <h3 className="text-subheading font-bold text-carbon-warm mt-1 group-hover:text-[#D42027] transition-colors duration-200">
+                        {product.name}
+                      </h3>
+                      {product.description && (
+                        <p className="text-body-sm font-normal text-mercury mt-2 line-clamp-2 leading-relaxed">
+                          {product.description}
+                        </p>
+                      )}
+                      <div className="mt-4 pt-3 border-t border-carbon-warm/10">
+                        <span className="text-body-sm font-bold text-carbon-warm group-hover:text-[#D42027] transition-colors duration-200">
+                          Ver equipo →
+                        </span>
                       </div>
                     </div>
-                  </div>
-                </div>
-              )
-            })}
-          </div>
+                  </Link>
+                ))}
+              </div>
+            )}
+          </>
         )}
 
         {/* CTA */}

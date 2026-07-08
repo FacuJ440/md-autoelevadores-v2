@@ -5,8 +5,8 @@ const featuredProducts = [
   {
     name: 'H 14-20 EVO',
     category: 'Autoelevadores Térmicos',
+    categorySlug: 'termicos',
     brand: 'Linde',
-    brandSlug: 'linde',
     productSlug: 'h-14-20-evo',
     image: 'ac_h14h20.png',
     description: 'Máximo rendimiento de trabajo y costes de mantenimiento bajos. Aire acondicionado, asientos de confort, Linde Safety Pilot.',
@@ -14,8 +14,8 @@ const featuredProducts = [
   {
     name: 'E16 - E20 EVO',
     category: 'Autoelevadores Eléctricos',
+    categorySlug: 'electricos',
     brand: 'Linde',
-    brandSlug: 'linde',
     productSlug: 'e16-e20-evo',
     image: 'ae_e16e20.png',
     description: 'Movilidad y estabilidad máximas. Piloto de seguridad de Linde, cargador de alta frecuencia, sistema de reemplazo de batería hidráulica.',
@@ -23,45 +23,45 @@ const featuredProducts = [
   {
     name: 'R10 - R16 B',
     category: 'Autoelevadores Retráctiles',
+    categorySlug: 'retractiles',
     brand: 'Linde',
-    brandSlug: 'linde',
     productSlug: 'r10-r16-b',
     image: 'ar_r10r16b1.png',
     description: 'Cómodo y rentable para usar en almacenes de estante alto. Vista panorámica, dirección 360°, mango de madera para joysticks.',
   },
   {
-    name: 'E10',
-    category: 'Autoelevadores Eléctricos',
+    name: 'H 20-25 EVO',
+    category: 'Autoelevadores Térmicos',
+    categorySlug: 'termicos',
     brand: 'Linde',
-    brandSlug: 'linde',
-    productSlug: 'e10',
-    image: 'aee10.png',
-    description: 'Compacto y ágil para espacios reducidos. Batería de litio opcional, maniobrabilidad excepcional y bajo coste operativo.',
+    productSlug: 'h-20-25-evo',
+    image: 'ac_h14h20.png',
+    description: 'Tecnología eficiente para aumentar la productividad. Especialmente robustas, rentables y productivas.',
   },
   {
-    name: 'EGV 14/16',
-    category: 'Apilador Eléctrico',
-    brand: 'Still',
-    brandSlug: 'still',
-    productSlug: 'egv-14-16',
-    image: 'egv.png',
-    description: 'Máximo aprovechamiento del espacio en almacenes de gran altura. Dirección eléctrica precisa y sistema de estabilización avanzado.',
+    name: 'H 25-35 EVO',
+    category: 'Autoelevadores Térmicos',
+    categorySlug: 'termicos',
+    brand: 'Linde',
+    productSlug: 'h-25-35-evo',
+    image: 'ac_h14h20.png',
+    description: 'Alto rendimiento y procesos seguros. Transmisión directa hidrostática y motores con elevado par de giro.',
   },
   {
-    name: 'RC 44-25 C DUPLEX',
-    category: 'Autoelevadores Combustión',
-    brand: 'Still',
-    brandSlug: 'still',
-    productSlug: 'rc-44-25-c-duplex',
-    image: 'rc_44.png',
-    description: 'Ideal para trabajos de carga y descarga. Diseñado y producido en Brasil, robusto y confiable.',
+    name: 'H40-H50 EVO',
+    category: 'Autoelevadores Térmicos',
+    categorySlug: 'termicos',
+    brand: 'Linde',
+    productSlug: 'h40-h50-evo',
+    image: 'ac_h14h20.png',
+    description: 'Rendimiento máximo sostenido en aplicaciones exigentes. Calidad que se destaca en usos intensivos.',
   },
 ]
 
 function ProductCard({ product }) {
   return (
     <Link
-      to={`/catalogo/${product.brandSlug}/${product.productSlug}`}
+      to={`/catalogo/${product.categorySlug}/${product.productSlug}`}
       className="group bg-paper-white rounded-sm overflow-hidden flex flex-col hover:shadow-lg transition-shadow duration-300 h-full"
     >
       <div className="aspect-[4/3] overflow-hidden bg-gray-100 flex-shrink-0">

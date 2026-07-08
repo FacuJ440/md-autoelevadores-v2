@@ -29,6 +29,15 @@
   animation: pan-image 4s ease-out forwards;
 }
 
+/* Hide scrollbar for tab strip */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 @keyframes scroll {
   0% { transform: translateX(0); }
   100% { transform: translateX(-16.666%); }
