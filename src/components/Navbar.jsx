@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useLayoutEffect } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 const navItems = [
@@ -6,26 +6,12 @@ const navItems = [
     label: 'Autoelevadores Linde',
     href: '#productos',
     subcategories: [
-      { label: 'Autoelevadores térmicos', href: '#productos' },
-      { label: 'Autoelevadores eléctricos', href: '#productos' },
-      { label: 'Apiladores de Pallet', href: '#productos' },
-      { label: 'Transpaletas eléctricas', href: '#productos' },
-      { label: 'Recogedores de pedidos', href: '#productos' },
-      { label: 'Autoelevadores retráctiles', href: '#productos' },
-      { label: 'Autoelevadores de pasillo muy estrecho', href: '#productos' },
-      { label: 'Trenes Logísticos', href: '#productos' },
-      { label: 'Tractores de Remolque', href: '#productos' },
-      { label: 'Autoelevadores Automatizados', href: '#productos' },
-    ],
-  },
-  {
-    label: 'Still',
-    href: '#productos',
-    subcategories: [
-      { label: 'Apilador eléctrico', href: 'https://www.mdautoelevadores.com.ar/still-es/apilador-electrico/' },
-      { label: 'Apilador Retráctil', href: 'https://www.mdautoelevadores.com.ar/still-es/apilador-retractil/' },
-      { label: 'Autoelevadores Combustión', href: 'https://www.mdautoelevadores.com.ar/still-es/autoelevadores-combustion/' },
-      { label: 'Autoelevador eléctrico', href: 'https://www.mdautoelevadores.com.ar/still-es/autoelevador-electrico/' },
+      { label: 'Autoelevadores Térmicos', href: '/catalogo?cat=termicos' },
+      { label: 'Autoelevadores Eléctricos', href: '/catalogo?cat=electricos' },
+      { label: 'Almacenaje', href: '/catalogo?cat=almacenaje' },
+      { label: 'Transporte', href: '/catalogo?cat=transporte' },
+      { label: 'Preparación de Pedidos', href: '/catalogo?cat=preparacion-pedidos' },
+      { label: 'Cubiertas', href: '/catalogo?cat=cubiertas' },
     ],
   },
   { label: 'Catálogo', href: '/catalogo' },
@@ -41,36 +27,24 @@ const Chevron = ({ open }) => (
 )
 
 function SubcategoryGrid({ subcategories, isOpen, onClose }) {
-  const contentRef = useRef(null)
-  const [height, setHeight] = useState(0)
-
-  useLayoutEffect(() => {
-    if (contentRef.current) {
-      // Temporarily show to measure, then hide
-      const el = contentRef.current
-      const parent = el.parentElement
-      const prevMaxHeight = parent.style.maxHeight
-      parent.style.maxHeight = 'none'
-      setHeight(el.scrollHeight)
-      parent.style.maxHeight = prevMaxHeight
-    }
-  }, [subcategories])
-
   if (!subcategories) return null
-  const cols = 3
-  const rows = Math.ceil(subcategories.length / cols)
 
   return (
-    <div
-      className="overflow-hidden transition-[max-height] duration-300 ease-in-out"
-      style={{ maxHeight: isOpen ? height : 0 }}
-    >
-      <div ref={contentRef} className="mt-3 pt-3 border-t border-white/10 grid gap-x-6 gap-y-1" style={{ gridTemplateColumns: `repeat(${cols}, auto)` }}>
-        {Array.from({ length: rows }).map((_, rowIdx) =>
-          Array.from({ length: cols }).map((_, colIdx) => {
-            const sub = subcategories[rowIdx * cols + colIdx]
-            if (!sub) return null
-            return (
+    <div className="grid transition-[grid-template-rows] duration-300 ease-in-out" style={{ gridTemplateRows: isOpen ? '1fr' : '0fr' }}>
+      <div className="overflow-hidden">
+        <div className="mt-3 pt-3 border-t border-white/10 grid grid-cols-3 gap-x-6 gap-y-1">
+          {subcategories.map((sub) => {
+            const isInternal = sub.href.startsWith('/')
+            return isInternal ? (
+              <Link
+                key={sub.label}
+                to={sub.href}
+                onClick={onClose}
+                className="text-white/70 text-[11px] font-normal hover:text-white hover:drop-shadow-[0_0_6px_rgba(255,255,255,0.4)] transition-all duration-200 whitespace-nowrap"
+              >
+                {sub.label}
+              </Link>
+            ) : (
               <a
                 key={sub.label}
                 href={sub.href}
@@ -80,8 +54,8 @@ function SubcategoryGrid({ subcategories, isOpen, onClose }) {
                 {sub.label}
               </a>
             )
-          })
-        )}
+          })}
+        </div>
       </div>
     </div>
   )

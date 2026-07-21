@@ -1,7 +1,7 @@
 import { useParams, Link } from 'react-router-dom'
 import { catalogCategories } from '@/data/catalogData'
-import StillDivider from '@/components/StillDivider'
 import BackButton from '@/components/BackButton'
+import ImageCarousel from '@/components/ImageCarousel'
 
 /* Placeholder image icon */
 function PlaceholderImage({ large }) {
@@ -57,45 +57,17 @@ export default function ProductDetailPage() {
 
   return (
     <div className="bg-vellum">
-      {/* Hero */}
-      <section className="relative min-h-[50vh] flex items-end overflow-hidden">
-        {product.image ? (
-          <img
-            src={`${import.meta.env.BASE_URL}${product.image}`}
-            alt={product.name}
-            className="absolute inset-0 w-full h-full object-cover"
-          />
-        ) : (
-          <div className="absolute inset-0 bg-carbon-warm/10" />
-        )}
-        <div className="absolute inset-0 bg-gradient-to-t from-carbon-warm/80 via-carbon-warm/20 to-carbon-warm/40" />
-        <div className="relative z-10 max-w-page mx-auto w-full px-6 pb-24 pt-48">
-          <span className="text-label font-normal text-white/60 uppercase tracking-wider">
-            {product.brand} · {category.title}
-          </span>
-          <h1 className="text-display font-light text-white max-w-3xl mt-2">
-            {product.name}
-          </h1>
-        </div>
-      </section>
-      <StillDivider />
+
 
       {/* Product info */}
-      <section className="py-24">
+      <section className="pt-32 pb-24">
         <div className="max-w-page mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-            {/* Left: product image */}
-            <div className="aspect-[4/3] rounded-sm overflow-hidden bg-carbon-warm/5">
-              {product.image ? (
-                <img
-                  src={`${import.meta.env.BASE_URL}${product.image}`}
-                  alt={product.name}
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <PlaceholderImage large />
-              )}
-            </div>
+            {/* Left: product image carousel */}
+            <ImageCarousel
+              images={product.images || (product.image ? [product.image] : [])}
+              alt={product.name}
+            />
 
             {/* Right: product details */}
             <div>
@@ -162,7 +134,7 @@ export default function ProductDetailPage() {
         </div>
       </section>
 
-      <BackButton />
+      <BackButton to={`/catalogo?cat=${category.slug}`} />
     </div>
   )
 }

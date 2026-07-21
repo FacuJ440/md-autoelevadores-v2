@@ -1,5 +1,5 @@
 import { useState, useMemo, useRef, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { catalogCategories } from '@/data/catalogData'
 
 /* Derive unique brands from data */
@@ -159,8 +159,13 @@ function ScrollableTabs({ items, activeKey, onSelect, colorActive = 'bg-[#D42027
 
 /* ── Main component ── */
 export default function Products() {
-  const [activeBrand, setActiveBrand] = useState(brands[0].slug)
-  const [activeCategory, setActiveCategory] = useState(catalogCategories[0].slug)
+  const [searchParams] = useSearchParams()
+  const initialCat = searchParams.get('cat')
+  const validInitialCat = initialCat && catalogCategories.some((c) => c.slug === initialCat) ? initialCat : catalogCategories[0].slug
+  const initialBrand = catalogCategories.find((c) => c.slug === validInitialCat)?.brandSlug || brands[0].slug
+
+  const [activeBrand, setActiveBrand] = useState(initialBrand)
+  const [activeCategory, setActiveCategory] = useState(validInitialCat)
   const [searchQuery, setSearchQuery] = useState('')
 
   /* Categories for the active brand */

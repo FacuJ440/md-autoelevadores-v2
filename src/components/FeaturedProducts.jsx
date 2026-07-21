@@ -1,67 +1,75 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useMemo } from 'react'
 import { Link } from 'react-router-dom'
+import { catalogCategories } from '@/data/catalogData'
 
-const featuredProducts = [
-  {
-    name: 'H 14-20 EVO',
-    category: 'Autoelevadores Térmicos',
-    categorySlug: 'termicos',
-    brand: 'Linde',
-    productSlug: 'h-14-20-evo',
-    image: 'ac_h14h20.png',
-    description: 'Máximo rendimiento de trabajo y costes de mantenimiento bajos. Aire acondicionado, asientos de confort, Linde Safety Pilot.',
-  },
-  {
-    name: 'E16 - E20 EVO',
-    category: 'Autoelevadores Eléctricos',
-    categorySlug: 'electricos',
-    brand: 'Linde',
-    productSlug: 'e16-e20-evo',
-    image: 'ae_e16e20.png',
-    description: 'Movilidad y estabilidad máximas. Piloto de seguridad de Linde, cargador de alta frecuencia, sistema de reemplazo de batería hidráulica.',
-  },
-  {
-    name: 'R10 - R16 B',
-    category: 'Autoelevadores Retráctiles',
-    categorySlug: 'retractiles',
-    brand: 'Linde',
-    productSlug: 'r10-r16-b',
-    image: 'ar_r10r16b1.png',
-    description: 'Cómodo y rentable para usar en almacenes de estante alto. Vista panorámica, dirección 360°, mango de madera para joysticks.',
-  },
-  {
-    name: 'H 20-25 EVO',
-    category: 'Autoelevadores Térmicos',
-    categorySlug: 'termicos',
-    brand: 'Linde',
-    productSlug: 'h-20-25-evo',
-    image: 'ac_h14h20.png',
-    description: 'Tecnología eficiente para aumentar la productividad. Especialmente robustas, rentables y productivas.',
-  },
-  {
-    name: 'H 25-35 EVO',
-    category: 'Autoelevadores Térmicos',
-    categorySlug: 'termicos',
-    brand: 'Linde',
-    productSlug: 'h-25-35-evo',
-    image: 'ac_h14h20.png',
-    description: 'Alto rendimiento y procesos seguros. Transmisión directa hidrostática y motores con elevado par de giro.',
-  },
-  {
-    name: 'H40-H50 EVO',
-    category: 'Autoelevadores Térmicos',
-    categorySlug: 'termicos',
-    brand: 'Linde',
-    productSlug: 'h40-h50-evo',
-    image: 'ac_h14h20.png',
-    description: 'Rendimiento máximo sostenido en aplicaciones exigentes. Calidad que se destaca en usos intensivos.',
-  },
-]
+/**
+ * Simple seeded pseudo-random number generator (Lehmer / Park-Miller).
+ * Returns a function that produces values in [0, 1).
+ */
+function createRng(seed) {
+  let s = seed % 2147483647
+  if (s <= 0) s += 2147483646
+  return () => {
+    s = (s * 16807) % 2147483647
+    return (s - 1) / 2147483646
+  }
+}
+
+/**
+ * Get a seed that changes every 48 hours.
+ * Based on days since epoch divided by 2 (so it flips every 48h).
+ */
+function get48hSeed() {
+  const now = Date.now()
+  const msPer48h = 48 * 60 * 60 * 1000
+  return Math.floor(now / msPer48h)
+}
+
+/**
+ * Pick `count` items from `array` using a seeded RNG (Fisher-Yates partial shuffle).
+ */
+function pickRandom(array, count, seed) {
+  const rng = createRng(seed)
+  const pool = [...array]
+  const picked = []
+  for (let i = 0; i < count && pool.length > 0; i++) {
+    const idx = Math.floor(rng() * pool.length)
+    picked.push(pool.splice(idx, 1)[0])
+  }
+  return picked
+}
+
+/**
+ * Flatten all products from catalogCategories, enriching each with
+ * category title and slug for linking.
+ */
+function getAllProducts() {
+  const all = []
+  for (const category of catalogCategories) {
+    for (const product of category.products) {
+      if (product.image) {
+        all.push({
+          name: product.name,
+          slug: product.slug,
+          brand: product.brand,
+          brandSlug: product.brandSlug,
+          image: product.image,
+          description: product.description,
+          categoryTitle: category.title,
+          categorySlug: category.slug,
+        })
+      }
+    }
+  }
+  return all
+}
+
+const FEATURED_COUNT = 6
 
 function ProductCard({ product }) {
   return (
     <Link
-      to={`/catalogo/${product.categorySlug}/${product.productSlug}`}
+      to={`/catalogo/${product.categorySlug}/${product.slug}`}
       className="group bg-paper-white rounded-sm overflow-hidden flex flex-col hover:shadow-lg transition-shadow duration-300 h-full"
     >
       <div className="aspect-[4/3] overflow-hidden bg-gray-100 flex-shrink-0">
@@ -78,7 +86,7 @@ function ProductCard({ product }) {
           </span>
           <span className="text-label text-mercury">·</span>
           <span className="text-label font-normal text-mercury">
-            {product.category}
+            {product.categoryTitle}
           </span>
         </div>
         <h3 className="text-subheading font-bold text-carbon-warm mb-3 group-hover:text-[#D42027] transition-colors duration-200">
@@ -101,6 +109,13 @@ export default function FeaturedProducts() {
   const scrollRef = useRef(null)
   const [activeIndex, setActiveIndex] = useState(0)
 
+  /* Pick featured products from catalog, rotating every 48h */
+  const featuredProducts = useMemo(() => {
+    const all = getAllProducts()
+    const seed = get48hSeed()
+    return pickRandom(all, FEATURED_COUNT, seed)
+  }, [])
+
   /* Track which card is centered for dot indicators */
   useEffect(() => {
     const el = scrollRef.current
@@ -115,7 +130,7 @@ export default function FeaturedProducts() {
 
     el.addEventListener('scroll', handleScroll, { passive: true })
     return () => el.removeEventListener('scroll', handleScroll)
-  }, [])
+  }, [featuredProducts.length])
 
   const scrollTo = (index) => {
     const el = scrollRef.current

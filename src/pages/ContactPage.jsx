@@ -175,10 +175,10 @@ export default function ContactPage() {
                 <div>
                   <h3 className="text-subheading font-normal text-carbon-warm mb-3">Email</h3>
                   <a
-                    href="mailto:info@mdautoelevadores.com.ar"
+                    href="mailto:info@mdautoelevadores.com"
                     className="text-body font-normal text-carbon-warm hover:text-mercury transition-colors"
                   >
-                    info@mdautoelevadores.com.ar
+                    info@mdautoelevadores.com
                   </a>
                 </div>
               </div>
