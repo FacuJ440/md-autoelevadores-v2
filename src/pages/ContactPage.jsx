@@ -1,7 +1,19 @@
 import { useState } from 'react'
+import emailjs from '@emailjs/browser'
 import SectionLabel from '@/components/SectionLabel'
 import StillDivider from '@/components/StillDivider'
 import BackButton from '@/components/BackButton'
+
+/**
+ * EmailJS credentials.
+ * Create a free account at https://www.emailjs.com and fill these in.
+ * - SERVICE_ID:  the email service you connected (e.g. Gmail, SMTP)
+ * - TEMPLATE_ID: the template you created for contact form
+ * - PUBLIC_KEY:  your public API key (found in Account → API Keys)
+ */
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -10,6 +22,7 @@ export default function ContactPage() {
     email: '',
     message: '',
   })
+  const [status, setStatus] = useState('idle') // idle | sending | success | error
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -17,6 +30,27 @@ export default function ContactPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    setStatus('sending')
+
+    emailjs
+      .send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          from_name: formData.name,
+          from_phone: formData.phone,
+          from_email: formData.email,
+          message: formData.message,
+        },
+        EMAILJS_PUBLIC_KEY
+      )
+      .then(() => {
+        setStatus('success')
+        setFormData({ name: '', phone: '', email: '', message: '' })
+      })
+      .catch(() => {
+        setStatus('error')
+      })
   }
 
   return (
@@ -105,10 +139,31 @@ export default function ContactPage() {
               </div>
               <button
                 type="submit"
-                className="bg-carbon-warm text-white text-body-sm font-normal px-[22px] py-[18px] rounded-sm hover:bg-onyx-depth transition-colors"
+                disabled={status === 'sending' || !EMAILJS_SERVICE_ID}
+                className={`text-white text-body-sm font-normal px-[22px] py-[18px] rounded-sm transition-colors ${
+                  status === 'success'
+                    ? 'bg-green-600'
+                    : status === 'error'
+                      ? 'bg-[#D42027]'
+                      : !EMAILJS_SERVICE_ID
+                        ? 'bg-mercury cursor-not-allowed'
+                        : 'bg-carbon-warm hover:bg-onyx-depth'
+                }`}
               >
-                Enviar consulta
+                {status === 'sending'
+                  ? 'Enviando…'
+                  : status === 'success'
+                    ? '¡Consulta enviada!'
+                    : status === 'error'
+                      ? 'Error al enviar, intente de nuevo'
+                      : 'Enviar consulta'}
               </button>
+
+              {!EMAILJS_SERVICE_ID && (
+                <p className="text-body-sm text-mercury/60 mt-2">
+                  El formulario requiere configuración de EmailJS (ver .env).
+                </p>
+              )}
             </form>
 
             {/* Info + Maps */}
