@@ -1,7 +1,7 @@
 const brands = [
   { name: 'LINDE', logo: 'logo-linde.png' },
   { name: 'STILL', logo: 'still-logo.png' },
-  { name: 'BATTIONI PAGANI', logo: 'logo_bp_150.jpg' },
+  // { name: 'BATTIONI PAGANI', logo: 'logo_bp_150.jpg' },
 ]
 
 export default function Footer() {
