@@ -26,7 +26,7 @@ const services = [
   {
     title: 'Baterías Industriales',
     description: 'Baterías traccionarias Hoppecke y cargadores. Soluciones completas de energía para la intralogística. Asesoramiento técnico y mantenimiento.',
-    image: 'baterias-hop.webp',
+    image: '/images/products/bateria-litio.jpg',
     color: '#67e1ff',
     hoverColor: '#6797ff',
   },
