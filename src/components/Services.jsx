@@ -1,5 +1,6 @@
 import SectionLabel from '@/components/SectionLabel'
 import { Link } from 'react-router-dom'
+import { assetUrl } from '@/utils/assetUrl'
 
 const services = [
   {
@@ -49,7 +50,7 @@ export default function Services() {
             >
               {/* Image: stays visible, scales up on hover */}
               <img
-                src={`${import.meta.env.BASE_URL}${service.image}`}
+                src={assetUrl(service.image)}
                 alt={service.title}
                 className="card-image-pan absolute inset-0 w-full h-full object-cover"
               />

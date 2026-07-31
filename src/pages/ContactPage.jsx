@@ -3,6 +3,7 @@ import emailjs from '@emailjs/browser'
 import SectionLabel from '@/components/SectionLabel'
 import StillDivider from '@/components/StillDivider'
 import BackButton from '@/components/BackButton'
+import { assetUrl } from '@/utils/assetUrl'
 
 /**
  * EmailJS credentials.
@@ -58,7 +59,7 @@ export default function ContactPage() {
       {/* Hero */}
       <section className="relative min-h-[60vh] flex items-end overflow-hidden">
         <img
-          src={`${import.meta.env.BASE_URL}lindebanner.webp`}
+          src={assetUrl('lindebanner.webp')}
           alt="MD Autoelevadores"
           className="absolute inset-0 w-full h-full object-cover"
         />

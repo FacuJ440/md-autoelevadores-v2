@@ -784,8 +784,8 @@ const catalogCategories = [
         slug: 'repuestos-originales',
         brand: 'Otros Productos',
         brandSlug: 'otros-productos',
-        image: '',
-        images: [],
+        image: '/images/products/repuestos.jpg',
+        images: ['/images/products/repuestos.jpg'],
         description:
           'Repuestos originales para autoelevadores Linde y Still. Garantizan la máxima compatibilidad, rendimiento y seguridad de su equipo. Stock permanente y asesoramiento técnico especializado.',
         features: [

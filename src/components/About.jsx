@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import SectionLabel from '@/components/SectionLabel'
 import StillDivider from '@/components/StillDivider'
+import { assetUrl } from '@/utils/assetUrl'
 
 export default function About() {
   return (
@@ -31,7 +32,7 @@ export default function About() {
           {/* Image */}
           <div className="rounded-sm aspect-[4/3] overflow-hidden">
             <img
-              src={`${import.meta.env.BASE_URL}lindebanner.webp`}
+              src={assetUrl('lindebanner.webp')}
               alt="Linde Material Handling"
               className="w-full h-full object-cover"
             />

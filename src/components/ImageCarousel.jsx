@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
+import { assetUrl } from '@/utils/assetUrl'
 
 /**
  * Image carousel with thumbnail navigation and lightbox.
@@ -7,8 +8,6 @@ import { useState, useEffect, useCallback } from 'react'
 export default function ImageCarousel({ images = [], alt = '' }) {
   const [activeIndex, setActiveIndex] = useState(0)
   const [lightboxOpen, setLightboxOpen] = useState(false)
-
-  const baseUrl = import.meta.env.BASE_URL
 
   /* Lock body scroll when lightbox is open */
   useEffect(() => {
@@ -51,7 +50,7 @@ export default function ImageCarousel({ images = [], alt = '' }) {
           className="aspect-[4/3] rounded-sm overflow-hidden bg-carbon-warm/5 w-full cursor-zoom-in block"
         >
           <img
-            src={`${baseUrl}${images[0]}`}
+            src={assetUrl(images[0])}
             alt={alt}
             className="w-full h-full object-cover"
           />
@@ -64,7 +63,6 @@ export default function ImageCarousel({ images = [], alt = '' }) {
             setActiveIndex={setActiveIndex}
             onClose={() => setLightboxOpen(false)}
             alt={alt}
-            baseUrl={baseUrl}
           />
         )}
       </>
@@ -81,7 +79,7 @@ export default function ImageCarousel({ images = [], alt = '' }) {
             className="w-full h-full cursor-zoom-in block"
           >
             <img
-              src={`${baseUrl}${images[activeIndex]}`}
+              src={assetUrl(images[activeIndex])}
               alt={`${alt} - ${activeIndex + 1}`}
               className="w-full h-full object-cover transition-opacity duration-300"
             />
@@ -152,7 +150,7 @@ export default function ImageCarousel({ images = [], alt = '' }) {
               }`}
             >
               <img
-                src={`${baseUrl}${img}`}
+                src={assetUrl(img)}
                 alt={`${alt} thumbnail ${i + 1}`}
                 className="w-full h-full object-cover"
               />
@@ -169,7 +167,6 @@ export default function ImageCarousel({ images = [], alt = '' }) {
           setActiveIndex={setActiveIndex}
           onClose={() => setLightboxOpen(false)}
           alt={alt}
-          baseUrl={baseUrl}
         />
       )}
     </>
@@ -179,7 +176,7 @@ export default function ImageCarousel({ images = [], alt = '' }) {
 /**
  * Fullscreen lightbox overlay.
  */
-function Lightbox({ images, activeIndex, setActiveIndex, onClose, alt, baseUrl }) {
+function Lightbox({ images, activeIndex, setActiveIndex, onClose, alt }) {
   return (
     <div
       className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center"
@@ -212,7 +209,7 @@ function Lightbox({ images, activeIndex, setActiveIndex, onClose, alt, baseUrl }
         onClick={(e) => e.stopPropagation()}
       >
         <img
-          src={`${baseUrl}${images[activeIndex]}`}
+          src={assetUrl(images[activeIndex])}
           alt={`${alt} - ${activeIndex + 1}`}
           className="max-w-[90vw] max-h-[85vh] object-contain select-none"
         />

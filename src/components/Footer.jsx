@@ -1,3 +1,5 @@
+import { assetUrl } from '@/utils/assetUrl'
+
 const brands = [
   { name: 'LINDE', logo: 'logo-linde.png' },
   { name: 'STILL', logo: 'still-logo.png' },
@@ -16,7 +18,7 @@ export default function Footer() {
           {allBrands.map((brand, i) => (
             <div key={i} className="flex-shrink-0 mx-16 flex items-center justify-center h-16">
               <img
-                src={`${import.meta.env.BASE_URL}${brand.logo}`}
+                src={assetUrl(brand.logo)}
                 alt={brand.name}
                 className="h-12 w-auto object-contain opacity-50 hover:opacity-100 transition-opacity duration-300"
               />

@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
+import { AnimatePresence } from 'framer-motion'
 import Navbar from '@/components/Navbar'
 import Hero from '@/components/Hero'
 import Services from '@/components/Services'
@@ -8,6 +9,7 @@ import FeaturedProducts from '@/components/FeaturedProducts'
 import Footer from '@/components/Footer'
 import WhatsAppButton from '@/components/WhatsAppButton'
 import ScrollToTopButton from '@/components/ScrollToTopButton'
+import PageTransition from '@/components/PageTransition'
 import CatalogPage from '@/pages/CatalogPage'
 import ProductDetailPage from '@/pages/ProductDetailPage'
 import AboutPage from '@/pages/AboutPage'
@@ -35,23 +37,33 @@ function ScrollToTop() {
 
 function App() {
   return (
-    <BrowserRouter basename="/md-autoelevadores-v2">
+    <BrowserRouter>
       <ScrollToTop />
       <div className="bg-vellum min-h-screen">
         <Navbar />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/catalogo" element={<CatalogPage />} />
-          <Route path="/catalogo/:categorySlug/:productSlug" element={<ProductDetailPage />} />
-          <Route path="/nosotros" element={<AboutPage />} />
-          <Route path="/servicios" element={<ServicesPage />} />
-          <Route path="/contacto" element={<ContactPage />} />
-        </Routes>
+        <AnimatedRoutes />
         <Footer />
         <WhatsAppButton />
         <ScrollToTopButton />
       </div>
     </BrowserRouter>
+  )
+}
+
+function AnimatedRoutes() {
+  const location = useLocation()
+
+  return (
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<PageTransition><HomePage /></PageTransition>} />
+        <Route path="/catalogo" element={<PageTransition><CatalogPage /></PageTransition>} />
+        <Route path="/catalogo/:categorySlug/:productSlug" element={<PageTransition><ProductDetailPage /></PageTransition>} />
+        <Route path="/nosotros" element={<PageTransition><AboutPage /></PageTransition>} />
+        <Route path="/servicios" element={<PageTransition><ServicesPage /></PageTransition>} />
+        <Route path="/contacto" element={<PageTransition><ContactPage /></PageTransition>} />
+      </Routes>
+    </AnimatePresence>
   )
 }
 

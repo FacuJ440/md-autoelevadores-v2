@@ -1,6 +1,26 @@
 import { useState, useMemo, useRef, useEffect } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { catalogCategories } from '@/data/catalogData'
+import { assetUrl } from '@/utils/assetUrl'
+import { motion, AnimatePresence } from 'framer-motion'
+
+/* Animation variants for staggered card entrance */
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.04 },
+  },
+}
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 16 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.25, ease: [0.22, 1, 0.36, 1] },
+  },
+}
 
 /* Derive unique brands from data */
 const brandLogos = {
@@ -125,7 +145,7 @@ function ScrollableTabs({ items, activeKey, onSelect, colorActive = 'bg-[#D42027
           >
             {isBrandLevel && item.logo && (
               <img
-                src={`${import.meta.env.BASE_URL}${item.logo}`}
+                src={assetUrl(item.logo)}
                 alt={item.label}
                 className="h-4 w-auto object-contain transition-all duration-200"
               />
@@ -239,40 +259,47 @@ export default function Products() {
                 No se encontraron resultados para &ldquo;{searchQuery}&rdquo;
               </p>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              <motion.div
+                key={searchQuery}
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible"
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+              >
                 {searchResults.map((product) => (
-                  <Link
-                    key={product.slug}
-                    to={`/catalogo/${product.categorySlug}/${product.slug}`}
-                    className="group bg-paper-white rounded-sm overflow-hidden hover:shadow-lg transition-shadow duration-300"
-                  >
-                    <div className="aspect-[4/3] overflow-hidden bg-carbon-warm/5">
-                      {product.image ? (
-                        <img
-                          src={`${import.meta.env.BASE_URL}${product.image}`}
-                          alt={product.name}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        />
-                      ) : (
-                        <PlaceholderImage />
-                      )}
-                    </div>
-                    <div className="p-5">
-                      <span className="text-label font-normal text-[#D42027] uppercase tracking-wider">
-                        {product.brand} · {product.category}
-                      </span>
-                      <h4 className="text-subheading font-bold text-carbon-warm mt-1 group-hover:text-[#D42027] transition-colors">
-                        {product.name}
-                      </h4>
-                      {product.description && (
-                        <p className="text-body-sm font-normal text-mercury mt-2 line-clamp-2">
-                          {product.description}
-                        </p>
-                      )}
-                    </div>
-                  </Link>
+                  <motion.div key={product.slug} variants={itemVariants}>
+                    <Link
+                      to={`/catalogo/${product.categorySlug}/${product.slug}`}
+                      className="group bg-paper-white rounded-sm overflow-hidden hover:shadow-lg transition-shadow duration-300"
+                    >
+                      <div className="aspect-[4/3] overflow-hidden bg-carbon-warm/5">
+                        {product.image ? (
+                          <img
+                            src={assetUrl(product.image)}
+                            alt={product.name}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          />
+                        ) : (
+                          <PlaceholderImage />
+                        )}
+                      </div>
+                      <div className="p-5">
+                        <span className="text-label font-normal text-[#D42027] uppercase tracking-wider">
+                          {product.brand} · {product.category}
+                        </span>
+                        <h4 className="text-subheading font-bold text-carbon-warm mt-1 group-hover:text-[#D42027] transition-colors">
+                          {product.name}
+                        </h4>
+                        {product.description && (
+                          <p className="text-body-sm font-normal text-mercury mt-2 line-clamp-2">
+                            {product.description}
+                          </p>
+                        )}
+                      </div>
+                    </Link>
+                  </motion.div>
                 ))}
-              </div>
+              </motion.div>
             )}
           </div>
         )}
@@ -302,45 +329,55 @@ export default function Products() {
 
             {/* Product grid for active category */}
             {currentCategory && (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {currentCategory.products.map((product) => (
-                  <Link
-                    key={product.slug}
-                    to={`/catalogo/${currentCategory.slug}/${product.slug}`}
-                    className="group bg-paper-white rounded-sm overflow-hidden hover:shadow-lg transition-shadow duration-300"
-                  >
-                    <div className="aspect-[4/3] overflow-hidden bg-carbon-warm/5">
-                      {product.image ? (
-                        <img
-                          src={`${import.meta.env.BASE_URL}${product.image}`}
-                          alt={product.name}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        />
-                      ) : (
-                        <PlaceholderImage />
-                      )}
-                    </div>
-                    <div className="p-6">
-                      <span className="text-label font-normal text-[#D42027] uppercase tracking-wider">
-                        {product.brand}
-                      </span>
-                      <h3 className="text-subheading font-bold text-carbon-warm mt-1 group-hover:text-[#D42027] transition-colors duration-200">
-                        {product.name}
-                      </h3>
-                      {product.description && (
-                        <p className="text-body-sm font-normal text-mercury mt-2 line-clamp-2 leading-relaxed">
-                          {product.description}
-                        </p>
-                      )}
-                      <div className="mt-4 pt-3 border-t border-carbon-warm/10">
-                        <span className="text-body-sm font-bold text-carbon-warm group-hover:text-[#D42027] transition-colors duration-200">
-                          Ver equipo →
-                        </span>
-                      </div>
-                    </div>
-                  </Link>
-                ))}
-              </div>
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeCategory}
+                  variants={containerVariants}
+                  initial="hidden"
+                  animate="visible"
+                  exit={{ opacity: 0, transition: { duration: 0.12 } }}
+                  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+                >
+                  {currentCategory.products.map((product) => (
+                    <motion.div key={product.slug} variants={itemVariants}>
+                      <Link
+                        to={`/catalogo/${currentCategory.slug}/${product.slug}`}
+                        className="group bg-paper-white rounded-sm overflow-hidden hover:shadow-lg transition-shadow duration-300"
+                      >
+                        <div className="aspect-[4/3] overflow-hidden bg-carbon-warm/5">
+                          {product.image ? (
+                            <img
+                              src={assetUrl(product.image)}
+                              alt={product.name}
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                            />
+                          ) : (
+                            <PlaceholderImage />
+                          )}
+                        </div>
+                        <div className="p-6">
+                          <span className="text-label font-normal text-[#D42027] uppercase tracking-wider">
+                            {product.brand}
+                          </span>
+                          <h3 className="text-subheading font-bold text-carbon-warm mt-1 group-hover:text-[#D42027] transition-colors duration-200">
+                            {product.name}
+                          </h3>
+                          {product.description && (
+                            <p className="text-body-sm font-normal text-mercury mt-2 line-clamp-2 leading-relaxed">
+                              {product.description}
+                            </p>
+                          )}
+                          <div className="mt-4 pt-3 border-t border-carbon-warm/10">
+                            <span className="text-body-sm font-bold text-carbon-warm group-hover:text-[#D42027] transition-colors duration-200">
+                              Ver equipo →
+                            </span>
+                          </div>
+                        </div>
+                      </Link>
+                    </motion.div>
+                  ))}
+                </motion.div>
+              </AnimatePresence>
             )}
           </>
         )}

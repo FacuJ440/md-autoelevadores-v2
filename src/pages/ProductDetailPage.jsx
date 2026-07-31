@@ -2,6 +2,18 @@ import { useParams, Link } from 'react-router-dom'
 import { catalogCategories } from '@/data/catalogData'
 import BackButton from '@/components/BackButton'
 import ImageCarousel from '@/components/ImageCarousel'
+import { motion } from 'framer-motion'
+
+/* Staggered entrance for product detail layout */
+const detailContainer = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.08 } },
+}
+
+const detailItem = {
+  hidden: { opacity: 0, y: 18 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] } },
+}
 
 /* Placeholder image icon */
 function PlaceholderImage({ large }) {
@@ -62,15 +74,22 @@ export default function ProductDetailPage() {
       {/* Product info */}
       <section className="pt-32 pb-24">
         <div className="max-w-page mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+          <motion.div
+            variants={detailContainer}
+            initial="hidden"
+            animate="visible"
+            className="grid grid-cols-1 lg:grid-cols-2 gap-16"
+          >
             {/* Left: product image carousel */}
-            <ImageCarousel
-              images={product.images || (product.image ? [product.image] : [])}
-              alt={product.name}
-            />
+            <motion.div variants={detailItem}>
+              <ImageCarousel
+                images={product.images || (product.image ? [product.image] : [])}
+                alt={product.name}
+              />
+            </motion.div>
 
             {/* Right: product details */}
-            <div>
+            <motion.div variants={detailItem}>
               {/* Breadcrumb */}
               <nav className="flex items-center gap-2 text-body-sm font-normal text-mercury mb-8 flex-wrap">
                 <Link to="/catalogo" className="hover:text-[#D42027] transition-colors">
@@ -129,8 +148,8 @@ export default function ProductDetailPage() {
                   Solicitar cotización
                 </Link>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 

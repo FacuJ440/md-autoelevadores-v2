@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { catalogCategories } from '@/data/catalogData'
+import { assetUrl } from '@/utils/assetUrl'
 
 /**
  * Simple seeded pseudo-random number generator (Lehmer / Park-Miller).
@@ -74,7 +75,7 @@ function ProductCard({ product }) {
     >
       <div className="aspect-[4/3] overflow-hidden bg-gray-100 flex-shrink-0">
         <img
-          src={`${import.meta.env.BASE_URL}${product.image}`}
+          src={assetUrl(product.image)}
           alt={product.name}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         />

@@ -1,6 +1,7 @@
 import SectionLabel from '@/components/SectionLabel'
 import StillDivider from '@/components/StillDivider'
 import BackButton from '@/components/BackButton'
+import { assetUrl } from '@/utils/assetUrl'
 
 const activities = [
   {
@@ -54,7 +55,7 @@ export default function AboutPage() {
       {/* Hero */}
       <section className="relative min-h-[60vh] flex items-end overflow-hidden">
         <img
-          src={`${import.meta.env.BASE_URL}lindebanner.webp`}
+          src={assetUrl('lindebanner.webp')}
           alt="MD Autoelevadores"
           className="absolute inset-0 w-full h-full object-cover"
         />
@@ -140,7 +141,7 @@ export default function AboutPage() {
             {locations.map((loc) => (
               <div key={loc.city} className="bg-paper-white rounded-sm p-6 flex gap-6 items-start">
                 <img
-                  src={`${import.meta.env.BASE_URL}${loc.map}`}
+                  src={assetUrl(loc.map)}
                   alt={`Mapa ${loc.city}`}
                   className="w-24 h-24 object-contain flex-shrink-0"
                 />

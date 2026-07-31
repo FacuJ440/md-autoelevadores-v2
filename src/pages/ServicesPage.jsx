@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import StillDivider from '@/components/StillDivider'
 import BackButton from '@/components/BackButton'
+import { assetUrl } from '@/utils/assetUrl'
 
 const postVentaServices = [
   {
@@ -86,7 +87,7 @@ export default function ServicesPage() {
       {/* Hero */}
       <section className="relative min-h-[60vh] flex items-end overflow-hidden">
         <img
-          src={`${import.meta.env.BASE_URL}013119_whatsappimage20230331at21.22.231.webp`}
+          src={assetUrl('013119_whatsappimage20230331at21.22.231.webp')}
           alt="Servicios MD Autoelevadores"
           className="absolute inset-0 w-full h-full object-cover object-[center_20%]"
         />
@@ -162,7 +163,7 @@ export default function ServicesPage() {
               >
                 <div className="aspect-[4/3] overflow-hidden">
                   <img
-                    src={`${import.meta.env.BASE_URL}${service.image}`}
+                    src={assetUrl(service.image)}
                     alt={service.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />

@@ -1,6 +1,7 @@
 import Products from '@/components/Products'
 import StillDivider from '@/components/StillDivider'
 import BackButton from '@/components/BackButton'
+import { assetUrl } from '@/utils/assetUrl'
 
 export default function CatalogPage() {
   return (
@@ -8,7 +9,7 @@ export default function CatalogPage() {
       {/* Hero */}
       <section className="relative min-h-[60vh] flex items-end overflow-hidden">
         <img
-          src={`${import.meta.env.BASE_URL}maquinarias-linde.webp`}
+          src={assetUrl('maquinarias-linde.webp')}
           alt="Catálogo MD Autoelevadores"
           className="absolute inset-0 w-full h-full object-cover"
         />

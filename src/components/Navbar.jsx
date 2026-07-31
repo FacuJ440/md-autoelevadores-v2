@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { assetUrl } from '@/utils/assetUrl'
 
 const navItems = [
   {
@@ -84,7 +85,7 @@ export default function Navbar() {
           }}
         >
           <img
-            src={`${import.meta.env.BASE_URL}logo.png`}
+            src={assetUrl('logo.png')}
             alt="MD Autoelevadores"
             className={`h-14 md:h-20 w-auto transition-all duration-300 ease-in-out ${isOpen ? '-translate-x-[200%] opacity-0' : 'translate-x-0 opacity-100'}`}
           />
