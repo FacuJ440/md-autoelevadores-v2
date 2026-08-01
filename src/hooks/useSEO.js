@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-const SITE_URL = 'https://mdautoelevadores.com'
+const SITE_URL = 'https://md-autoelevadores.com'
 const DEFAULT_TITLE = 'MD Autoelevadores | Linde y Still en Mendoza, San Juan y San Luis'
 const DEFAULT_DESCRIPTION =
   'Concesionario oficial Linde y Still en Zona Cuyo. Venta y alquiler de autoelevadores eléctricos y térmicos, servicio técnico, repuestos y baterías. Mendoza, San Juan y San Luis.'

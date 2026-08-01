@@ -13,12 +13,12 @@ const routes = [
 ]
 
 routes.forEach((r) => {
-  xml += `  <url>\n    <loc>https://mdautoelevadores.com${r.url}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>${r.changefreq}</changefreq>\n    <priority>${r.priority}</priority>\n  </url>\n`
+  xml += `  <url>\n    <loc>https://md-autoelevadores.com${r.url}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>${r.changefreq}</changefreq>\n    <priority>${r.priority}</priority>\n  </url>\n`
 })
 
 catalogCategories.forEach((cat) => {
   cat.products.forEach((prod) => {
-    xml += `  <url>\n    <loc>https://mdautoelevadores.com/catalogo/${cat.slug}/${prod.slug}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.6</priority>\n  </url>\n`
+    xml += `  <url>\n    <loc>https://md-autoelevadores.com/catalogo/${cat.slug}/${prod.slug}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.6</priority>\n  </url>\n`
   })
 })
 

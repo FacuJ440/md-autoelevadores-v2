@@ -70,9 +70,9 @@ export default function ProductDetailPage() {
       brand: { '@type': 'Brand', name: product.brand },
       category: category.title,
       image: product.image
-        ? `https://mdautoelevadores.com${product.image}`
+        ? `https://md-autoelevadores.com${product.image}`
         : undefined,
-      url: `https://mdautoelevadores.com/catalogo/${category.slug}/${product.slug}`,
+      url: `https://md-autoelevadores.com/catalogo/${category.slug}/${product.slug}`,
       offers: {
         '@type': 'Offer',
         availability: 'https://schema.org/InStock',
@@ -85,10 +85,10 @@ export default function ProductDetailPage() {
       '@context': 'https://schema.org',
       '@type': 'BreadcrumbList',
       itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Inicio', item: 'https://mdautoelevadores.com/' },
-        { '@type': 'ListItem', position: 2, name: 'Catálogo', item: 'https://mdautoelevadores.com/catalogo' },
-        { '@type': 'ListItem', position: 3, name: category.title, item: `https://mdautoelevadores.com/catalogo/${category.slug}` },
-        { '@type': 'ListItem', position: 4, name: product.name, item: `https://mdautoelevadores.com/catalogo/${category.slug}/${product.slug}` },
+        { '@type': 'ListItem', position: 1, name: 'Inicio', item: 'https://md-autoelevadores.com/' },
+        { '@type': 'ListItem', position: 2, name: 'Catálogo', item: 'https://md-autoelevadores.com/catalogo' },
+        { '@type': 'ListItem', position: 3, name: category.title, item: `https://md-autoelevadores.com/catalogo/${category.slug}` },
+        { '@type': 'ListItem', position: 4, name: product.name, item: `https://md-autoelevadores.com/catalogo/${category.slug}/${product.slug}` },
       ],
     }
 
