@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import StillDivider from '@/components/StillDivider'
 import BackButton from '@/components/BackButton'
 import { assetUrl } from '@/utils/assetUrl'
+import useSEO from '@/hooks/useSEO'
 
 const postVentaServices = [
   {
@@ -82,6 +83,13 @@ const adaptaciones = [
 ]
 
 export default function ServicesPage() {
+  useSEO({
+    title: 'Servicios',
+    description: 'Servicio técnico oficial para autoelevadores Linde y Still. Mantenimiento preventivo y correctivo, full service, alquiler, repuestos originales y atención de emergencias en Mendoza, San Juan y San Luis.',
+    path: '/servicios',
+    image: '/013119_whatsappimage20230331at21.22.231.webp',
+  })
+
   return (
     <div className="bg-vellum">
       {/* Hero */}

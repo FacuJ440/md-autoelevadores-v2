@@ -3,6 +3,8 @@ import { catalogCategories } from '@/data/catalogData'
 import BackButton from '@/components/BackButton'
 import ImageCarousel from '@/components/ImageCarousel'
 import { motion } from 'framer-motion'
+import useSEO from '@/hooks/useSEO'
+import { useEffect } from 'react'
 
 /* Staggered entrance for product detail layout */
 const detailContainer = {
@@ -45,6 +47,68 @@ export default function ProductDetailPage() {
 
   /* Find the product */
   const product = category?.products.find((p) => p.slug === productSlug)
+
+  /* Dynamic SEO per product */
+  useSEO({
+    title: product ? `${product.name} - ${product.brand}` : 'Producto no encontrado',
+    description: product
+      ? `${product.name} ${product.brand}. ${product.description?.slice(0, 150) || ''}`
+      : 'Producto no encontrado en el catálogo de MD Autoelevadores.',
+    path: `/catalogo/${categorySlug}/${productSlug}`,
+    image: product?.image,
+  })
+
+  /* Inject Product + BreadcrumbList JSON-LD */
+  useEffect(() => {
+    if (!product || !category) return
+
+    const productJsonLd = {
+      '@context': 'https://schema.org',
+      '@type': 'Product',
+      name: `${product.name} ${product.brand}`,
+      description: product.description || '',
+      brand: { '@type': 'Brand', name: product.brand },
+      category: category.title,
+      image: product.image
+        ? `https://mdautoelevadores.com${product.image}`
+        : undefined,
+      url: `https://mdautoelevadores.com/catalogo/${category.slug}/${product.slug}`,
+      offers: {
+        '@type': 'Offer',
+        availability: 'https://schema.org/InStock',
+        priceCurrency: 'ARS',
+        seller: { '@type': 'Organization', name: 'MD Autoelevadores y Equipos S.R.L.' },
+      },
+    }
+
+    const breadcrumbJsonLd = {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Inicio', item: 'https://mdautoelevadores.com/' },
+        { '@type': 'ListItem', position: 2, name: 'Catálogo', item: 'https://mdautoelevadores.com/catalogo' },
+        { '@type': 'ListItem', position: 3, name: category.title, item: `https://mdautoelevadores.com/catalogo/${category.slug}` },
+        { '@type': 'ListItem', position: 4, name: product.name, item: `https://mdautoelevadores.com/catalogo/${category.slug}/${product.slug}` },
+      ],
+    }
+
+    const script1 = document.createElement('script')
+    script1.type = 'application/ld+json'
+    script1.text = JSON.stringify(productJsonLd)
+    script1.id = 'product-jsonld'
+    document.head.appendChild(script1)
+
+    const script2 = document.createElement('script')
+    script2.type = 'application/ld+json'
+    script2.text = JSON.stringify(breadcrumbJsonLd)
+    script2.id = 'breadcrumb-jsonld'
+    document.head.appendChild(script2)
+
+    return () => {
+      document.getElementById('product-jsonld')?.remove()
+      document.getElementById('breadcrumb-jsonld')?.remove()
+    }
+  }, [product, category])
 
   if (!category || !product) {
     return (

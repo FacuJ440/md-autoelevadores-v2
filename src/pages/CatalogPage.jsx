@@ -2,8 +2,16 @@ import Products from '@/components/Products'
 import StillDivider from '@/components/StillDivider'
 import BackButton from '@/components/BackButton'
 import { assetUrl } from '@/utils/assetUrl'
+import useSEO from '@/hooks/useSEO'
 
 export default function CatalogPage() {
+  useSEO({
+    title: 'Catálogo de Autoelevadores',
+    description: 'Catálogo completo de autoelevadores Linde y Still. Eléctricos, térmicos, almacenaje, transporte, baterías, cubiertas y repuestos. Mendoza, San Juan y San Luis.',
+    path: '/catalogo',
+    image: '/maquinarias-linde.webp',
+  })
+
   return (
     <div className="bg-vellum">
       {/* Hero */}

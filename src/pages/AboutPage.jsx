@@ -2,6 +2,7 @@ import SectionLabel from '@/components/SectionLabel'
 import StillDivider from '@/components/StillDivider'
 import BackButton from '@/components/BackButton'
 import { assetUrl } from '@/utils/assetUrl'
+import useSEO from '@/hooks/useSEO'
 
 const activities = [
   {
@@ -50,6 +51,13 @@ const locations = [
 const brands = ['Linde', 'Still', 'Hako', 'Hoppecke', 'Kelley', 'Raynor', 'Nergeco', 'CVS Ferrari', 'Battioni Pagani']
 
 export default function AboutPage() {
+  useSEO({
+    title: 'Nosotros',
+    description: 'MD Autoelevadores y Equipos S.R.L. Concesionario oficial Linde y Still en Zona Cuyo. Representantes en Mendoza, San Juan y San Luis con más de 30 años de experiencia.',
+    path: '/nosotros',
+    image: '/lindebanner.webp',
+  })
+
   return (
     <div className="bg-vellum">
       {/* Hero */}

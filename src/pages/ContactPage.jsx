@@ -4,6 +4,7 @@ import SectionLabel from '@/components/SectionLabel'
 import StillDivider from '@/components/StillDivider'
 import BackButton from '@/components/BackButton'
 import { assetUrl } from '@/utils/assetUrl'
+import useSEO from '@/hooks/useSEO'
 
 /**
  * EmailJS credentials.
@@ -53,6 +54,13 @@ export default function ContactPage() {
         setStatus('error')
       })
   }
+
+  useSEO({
+    title: 'Contacto',
+    description: 'Contactá a MD Autoelevadores. Sucursales en Mendoza y San Juan. WhatsApp, teléfono y formulario para consultas sobre autoelevadores, servicio técnico y alquiler.',
+    path: '/contacto',
+    image: '/lindebanner.webp',
+  })
 
   return (
     <div className="bg-vellum">
