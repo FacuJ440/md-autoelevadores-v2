@@ -3,6 +3,7 @@ import emailjs from '@emailjs/browser'
 import SectionLabel from '@/components/SectionLabel'
 import StillDivider from '@/components/StillDivider'
 import BackButton from '@/components/BackButton'
+import Captcha from '@/components/Captcha'
 import { assetUrl } from '@/utils/assetUrl'
 import useSEO from '@/hooks/useSEO'
 
@@ -25,6 +26,7 @@ export default function ContactPage() {
     message: '',
   })
   const [status, setStatus] = useState('idle') // idle | sending | success | error
+  const [captchaValid, setCaptchaValid] = useState(false)
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -32,6 +34,7 @@ export default function ContactPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    if (!captchaValid) return
     setStatus('sending')
 
     emailjs
@@ -146,15 +149,16 @@ export default function ContactPage() {
                   placeholder="Cuéntenos su necesidad"
                 />
               </div>
+              <Captcha onValidate={setCaptchaValid} />
               <button
                 type="submit"
-                disabled={status === 'sending' || !EMAILJS_SERVICE_ID}
+                disabled={status === 'sending' || !EMAILJS_SERVICE_ID || !captchaValid}
                 className={`text-white text-body-sm font-normal px-[22px] py-[18px] rounded-sm transition-colors ${
                   status === 'success'
                     ? 'bg-green-600'
                     : status === 'error'
                       ? 'bg-[#D42027]'
-                      : !EMAILJS_SERVICE_ID
+                      : !EMAILJS_SERVICE_ID || !captchaValid
                         ? 'bg-mercury cursor-not-allowed'
                         : 'bg-carbon-warm hover:bg-onyx-depth'
                 }`}
