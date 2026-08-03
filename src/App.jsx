@@ -15,6 +15,7 @@ import ProductDetailPage from '@/pages/ProductDetailPage'
 import AboutPage from '@/pages/AboutPage'
 import ServicesPage from '@/pages/ServicesPage'
 import ContactPage from '@/pages/ContactPage'
+import JoinUsPage from '@/pages/JoinUsPage'
 
 function HomePage() {
   return (
@@ -62,6 +63,7 @@ function AnimatedRoutes() {
         <Route path="/nosotros" element={<PageTransition><AboutPage /></PageTransition>} />
         <Route path="/servicios" element={<PageTransition><ServicesPage /></PageTransition>} />
         <Route path="/contacto" element={<PageTransition><ContactPage /></PageTransition>} />
+        <Route path="/unete-al-equipo" element={<PageTransition><JoinUsPage /></PageTransition>} />
       </Routes>
     </AnimatePresence>
   )

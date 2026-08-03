@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { assetUrl } from '@/utils/assetUrl'
 
 const brands = [
@@ -39,6 +40,13 @@ export default function Footer() {
               © 2026 MD Autoelevadores. Todos los derechos reservados.
             </p>
           </div>
+
+          <Link
+            to="/unete-al-equipo"
+            className="text-body-sm font-normal text-white/60 hover:text-white transition-colors"
+          >
+            Unite a nuestro equipo
+          </Link>
 
         </div>
       </div>
