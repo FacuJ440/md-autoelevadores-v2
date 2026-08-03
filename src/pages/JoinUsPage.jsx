@@ -88,13 +88,14 @@ export default function JoinUsPage() {
         body: uploadForm,
       })
       const uploadData = await uploadRes.json()
+      console.log('Upload response:', uploadData)
 
       if (!uploadData.success) {
-        throw new Error('Upload failed')
+        throw new Error('Upload failed: ' + JSON.stringify(uploadData))
       }
 
       // 2. Send email via EmailJS with the download link
-      await emailjs.send(
+      const emailRes = await emailjs.send(
         EMAILJS_SERVICE_ID,
         EMAILJS_CV_TEMPLATE_ID,
         {
@@ -108,13 +109,15 @@ export default function JoinUsPage() {
         },
         EMAILJS_PUBLIC_KEY
       )
+      console.log('EmailJS response:', emailRes)
 
       setStatus('success')
       setFormData({ name: '', phone: '', email: '', position: '', message: '' })
       setFileName('')
       setSelectedFile(null)
       setCaptchaValid(false)
-    } catch {
+    } catch (err) {
+      console.error('Submit error:', err)
       setStatus('error')
     }
   }
