@@ -88,7 +88,6 @@ export default function JoinUsPage() {
         body: uploadForm,
       })
       const uploadData = await uploadRes.json()
-      console.log('Upload response:', uploadData)
 
       if (!uploadData.success) {
         throw new Error('Upload failed: ' + JSON.stringify(uploadData))
@@ -109,15 +108,13 @@ export default function JoinUsPage() {
         },
         EMAILJS_PUBLIC_KEY
       )
-      console.log('EmailJS response:', emailRes)
 
       setStatus('success')
       setFormData({ name: '', phone: '', email: '', position: '', message: '' })
       setFileName('')
       setSelectedFile(null)
       setCaptchaValid(false)
-    } catch (err) {
-      console.error('Submit error:', err)
+    } catch {
       setStatus('error')
     }
   }
