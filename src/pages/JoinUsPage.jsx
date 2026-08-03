@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState } from 'react'
 import emailjs from '@emailjs/browser'
 import StillDivider from '@/components/StillDivider'
 import BackButton from '@/components/BackButton'
@@ -20,16 +20,28 @@ const POSITIONS = [
 ]
 
 export default function JoinUsPage() {
-  const formRef = useRef(null)
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    email: '',
+    position: '',
+    message: '',
+  })
   const [status, setStatus] = useState('idle') // idle | sending | success | error
   const [captchaValid, setCaptchaValid] = useState(false)
   const [fileName, setFileName] = useState('')
   const [fileError, setFileError] = useState('')
+  const [selectedFile, setSelectedFile] = useState(null)
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value })
+  }
 
   const handleFileChange = (e) => {
     const file = e.target.files[0]
     if (!file) {
       setFileName('')
+      setSelectedFile(null)
       setFileError('')
       return
     }
@@ -42,42 +54,68 @@ export default function JoinUsPage() {
     if (!allowedTypes.includes(file.type)) {
       setFileError('Solo se aceptan archivos PDF, DOC o DOCX')
       setFileName('')
+      setSelectedFile(null)
       e.target.value = ''
       return
     }
 
-    if (file.size > 2 * 1024 * 1024) {
-      setFileError('El archivo no puede superar 2 MB')
+    if (file.size > 5 * 1024 * 1024) {
+      setFileError('El archivo no puede superar 5 MB')
       setFileName('')
+      setSelectedFile(null)
       e.target.value = ''
       return
     }
 
     setFileError('')
     setFileName(file.name)
+    setSelectedFile(file)
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    if (!captchaValid || !fileName || fileError) return
+    if (!captchaValid || !selectedFile || fileError) return
     setStatus('sending')
 
-    emailjs
-      .sendForm(
+    try {
+      // 1. Upload CV to file.io (free, auto-deletes after first download)
+      const uploadForm = new FormData()
+      uploadForm.append('file', selectedFile)
+
+      const uploadRes = await fetch('https://file.io', {
+        method: 'POST',
+        body: uploadForm,
+      })
+      const uploadData = await uploadRes.json()
+
+      if (!uploadData.success) {
+        throw new Error('Upload failed')
+      }
+
+      // 2. Send email via EmailJS with the download link
+      await emailjs.send(
         EMAILJS_SERVICE_ID,
         EMAILJS_CV_TEMPLATE_ID,
-        formRef.current,
+        {
+          from_name: formData.name,
+          from_phone: formData.phone,
+          from_email: formData.email,
+          position: formData.position,
+          message: formData.message,
+          cv_link: uploadData.link,
+          cv_name: fileName,
+        },
         EMAILJS_PUBLIC_KEY
       )
-      .then(() => {
-        setStatus('success')
-        formRef.current.reset()
-        setFileName('')
-        setCaptchaValid(false)
-      })
-      .catch(() => {
-        setStatus('error')
-      })
+
+      setStatus('success')
+      setFormData({ name: '', phone: '', email: '', position: '', message: '' })
+      setFileName('')
+      setSelectedFile(null)
+      setCaptchaValid(false)
+    } catch {
+      setStatus('error')
+    }
   }
 
   useSEO({
@@ -87,7 +125,7 @@ export default function JoinUsPage() {
     image: '/lindebanner.webp',
   })
 
-  const canSubmit = captchaValid && fileName && !fileError && EMAILJS_SERVICE_ID && EMAILJS_CV_TEMPLATE_ID
+  const canSubmit = captchaValid && selectedFile && !fileError && EMAILJS_SERVICE_ID && EMAILJS_CV_TEMPLATE_ID
 
   return (
     <div className="bg-vellum">
@@ -119,14 +157,16 @@ export default function JoinUsPage() {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             {/* Form */}
-            <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label className="block text-label font-normal uppercase tracking-[0.12em] text-carbon-warm mb-2">
                   Nombre completo
                 </label>
                 <input
                   type="text"
-                  name="from_name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
                   required
                   className="w-full bg-paper-white border border-carbon-warm/10 rounded-sm px-4 py-3 text-body font-normal text-carbon-warm placeholder:text-mercury focus:outline-none focus:border-carbon-warm/30 transition-colors"
                   placeholder="Su nombre completo"
@@ -138,7 +178,9 @@ export default function JoinUsPage() {
                 </label>
                 <input
                   type="tel"
-                  name="from_phone"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
                   required
                   className="w-full bg-paper-white border border-carbon-warm/10 rounded-sm px-4 py-3 text-body font-normal text-carbon-warm placeholder:text-mercury focus:outline-none focus:border-carbon-warm/30 transition-colors"
                   placeholder="Su celular"
@@ -150,7 +192,9 @@ export default function JoinUsPage() {
                 </label>
                 <input
                   type="email"
-                  name="from_email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
                   required
                   className="w-full bg-paper-white border border-carbon-warm/10 rounded-sm px-4 py-3 text-body font-normal text-carbon-warm placeholder:text-mercury focus:outline-none focus:border-carbon-warm/30 transition-colors"
                   placeholder="Su email"
@@ -162,8 +206,9 @@ export default function JoinUsPage() {
                 </label>
                 <select
                   name="position"
+                  value={formData.position}
+                  onChange={handleChange}
                   required
-                  defaultValue=""
                   className="w-full bg-paper-white border border-carbon-warm/10 rounded-sm px-4 py-3 text-body font-normal text-carbon-warm focus:outline-none focus:border-carbon-warm/30 transition-colors"
                 >
                   <option value="" disabled>Seleccione un área</option>
@@ -178,6 +223,8 @@ export default function JoinUsPage() {
                 </label>
                 <textarea
                   name="message"
+                  value={formData.message}
+                  onChange={handleChange}
                   rows={3}
                   className="w-full bg-paper-white border border-carbon-warm/10 rounded-sm px-4 py-3 text-body font-normal text-carbon-warm placeholder:text-mercury focus:outline-none focus:border-carbon-warm/30 transition-colors resize-none"
                   placeholder="Cuéntenos sobre su experiencia"
@@ -192,14 +239,13 @@ export default function JoinUsPage() {
                     Seleccionar archivo
                     <input
                       type="file"
-                      name="cv"
                       accept=".pdf,.doc,.docx"
                       onChange={handleFileChange}
                       className="hidden"
                     />
                   </label>
                   <span className="text-body-sm text-mercury truncate">
-                    {fileName || 'PDF, DOC o DOCX (máx. 2 MB)'}
+                    {fileName || 'PDF, DOC o DOCX (máx. 5 MB)'}
                   </span>
                 </div>
                 {fileError && (
