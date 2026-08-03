@@ -9,6 +9,7 @@ import useSEO from '@/hooks/useSEO'
 const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID
 const EMAILJS_CV_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_CV_TEMPLATE_ID
 const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+const CV_UPLOAD_URL = import.meta.env.VITE_CV_UPLOAD_URL
 
 const POSITIONS = [
   'Servicio Técnico',
@@ -78,11 +79,11 @@ export default function JoinUsPage() {
     setStatus('sending')
 
     try {
-      // 1. Upload CV to file.io (free, auto-deletes after first download)
+      // 1. Upload CV via Cloudflare Worker proxy (avoids CORS)
       const uploadForm = new FormData()
       uploadForm.append('file', selectedFile)
 
-      const uploadRes = await fetch('https://file.io', {
+      const uploadRes = await fetch(CV_UPLOAD_URL, {
         method: 'POST',
         body: uploadForm,
       })
